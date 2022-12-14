@@ -1,5 +1,6 @@
-import { createStore } from "vuex";
-import { IRootStore } from "./types";
+/* 引入时顺便起别名因为自定义的也叫这个： */
+import { createStore, Store, useStore as useVuexStore } from "vuex"; // 其中Store是vuex提供的一个类型
+import { IRootStore, IStoreType } from "./types";
 import login from "./modules/login";
 import main from "./modules/main";
 
@@ -21,5 +22,10 @@ const store = createStore<IRootStore>({
     main
   }
 });
+
+export function useStore(): Store<IStoreType> {
+  // 将vuex的useStore起别名后再return出去，而在这这个过程中已经给它明确制定了类型：
+  return useVuexStore();
+}
 
 export default store;

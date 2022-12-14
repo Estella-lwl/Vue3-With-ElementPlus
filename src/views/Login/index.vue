@@ -8,6 +8,7 @@
 <script setup lang="ts">
 import { useStore } from "vuex";
 import { reactive } from "vue";
+import { loginRequest } from "@/api/login/login";
 
 const store = useStore();
 
@@ -18,6 +19,9 @@ const account = reactive({
 function login() {
   // 点击登录按钮触发vuex中的loginModule方法：
   store.dispatch("login/accountLoginAction", { ...account });
+  loginRequest(account).then((res: any) => {
+    console.log("res", res);
+  });
 }
 </script>
 

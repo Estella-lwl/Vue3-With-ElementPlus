@@ -8,14 +8,22 @@
     </div>
     <div class="menu-content">
       <el-menu class="el-menu-vertical-demo" default-active="2">
-        <template v-for="item in $store.state.login" :key=""></template>
+        <template v-for="item in menuStore" :key="item.id"></template>
       </el-menu>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-//
+import { computed } from "vue";
+// import { useStore } from "vuex";
+import { useStore } from "@/store";
+
+const store = useStore(); //这时会发现鼠标悬停时类型提示已经是自定义后的
+console.log("菜单store", store, store.state.login);
+const menuStore = computed(() => {
+  return store.state.login;
+});
 </script>
 
 <style scoped lang="less">
