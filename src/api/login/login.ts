@@ -10,6 +10,18 @@ export function loginRequest(account: IAccount) {
   return request.request({
     url: LoginApi.AccountLogin,
     method: "get",
-    data: account //data是放在account中的
+    data: account, //data是放在account中的
+
+    // 给当前请求单独设置拦截：
+    interceptors: {
+      requestInterceptor: (config) => {
+        console.log("单独请求的config", config);
+        return config;
+      },
+      responseInterceptor: (res) => {
+        console.log("单独响应的res", res);
+        return res;
+      }
+    }
   });
 }
