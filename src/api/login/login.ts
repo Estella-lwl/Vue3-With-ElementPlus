@@ -6,8 +6,15 @@ enum LoginApi {
   AccountLogin = "/home/multidata"
 }
 
+// 写这个类型是为了方便res.data取值
+interface DataType {
+  data: any;
+  returnCode: string;
+  success: boolean;
+}
+
 export function loginRequest(account: IAccount) {
-  return request.request({
+  return request.request<DataType>({
     url: LoginApi.AccountLogin,
     method: "get",
     data: account, //data是放在account中的
@@ -22,6 +29,7 @@ export function loginRequest(account: IAccount) {
         console.log("单独响应的res", res);
         return res;
       }
-    }
+    },
+    showLoading: true // 如果这里不传，就会使用封装时设置的默认值true
   });
 }
