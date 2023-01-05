@@ -1,7 +1,5 @@
 // 统一出口：
-import axios from "axios";
 import type { AxiosInstance } from "axios";
-import type { SelfRequestInterceptors, SelfRequestConfig } from "./types";
 import { SelfAxios } from "../utils/request";
 import { BASE_URL, TIME_OUT } from "./common/config";
 

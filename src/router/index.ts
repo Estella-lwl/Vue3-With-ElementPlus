@@ -1,9 +1,9 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
+import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
-    redirect: "/Login"
+    redirect: "/login"
   },
   {
     path: "/home",
@@ -16,17 +16,17 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("@/views/AnyList/index.vue")
   },
   {
-    path: "/Layout",
+    path: "/layout",
     component: () => import("@/views/Layout/index.vue")
   },
   {
-    path: "/Login",
-    component: () => import("@/views/Login/index.vue")
+    path: "/login",
+    component: () => import("@/views/Login/login.vue")
   }
 ];
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHashHistory(process.env.BASE_URL),
   routes
 });
 
