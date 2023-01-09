@@ -20,7 +20,12 @@
               <el-input v-model="account.name" />
             </el-form-item>
             <el-form-item label="密码" prop="password">
-              <el-input show-password v-model="account.password" />
+              <el-input
+                type="password"
+                autocomplete="off"
+                show-password
+                v-model="account.password"
+              />
             </el-form-item>
           </el-form>
         </el-tab-pane>
@@ -29,7 +34,12 @@
           <template #label>
             <span><i class="el-icon-mobile-phone"></i> 手机登录</span>
           </template>
-          <el-form label-width="60px">
+          <el-form
+            label-width="60px"
+            ref="formRef"
+            :model="phone"
+            :rules="rules"
+          >
             <el-form-item label="手机号" prop="num">
               <el-input v-model="phone.code" />
             </el-form-item>
@@ -50,7 +60,7 @@
         <el-link type="primary">忘记密码</el-link>
       </div>
 
-      <el-button type="primary" class="login-btn" @click="login"
+      <el-button type="primary" class="login-btn" @click="handleLogin"
         >立即登录</el-button
       >
     </div>
@@ -67,51 +77,56 @@ import localCache from "@/utils/cache";
 import { rules } from "./config/account-config";
 
 const store = useStore();
+
+// form表单的类型可以使用typeof及组件自带类型：
 const formRef = ref<InstanceType<typeof ElForm>>();
-
+// 给el-tab一个默认的name值:
+const currentTab = ref("account");
 const isKeepPassword = ref(false);
-const account = reactive({
-  name: "polar",
-  password: "123"
-});
 
-// const account = reactive({
-//   name: localCache.getCache("name") ?? "",
-//   password: localCache.getCache("password") ?? ""
-// });
+const account = reactive({
+  // 缓存中没有账号信息的话 =》就为空：
+  name: localCache.getCache("name") ?? "",
+  password: localCache.getCache("password") ?? ""
+});
 
 const phone = reactive({
   num: "",
   code: ""
 });
 
-const loginAction = (isKeepPassword: boolean) => {
+const handleLogin = () => {
+  let data: any = {};
+  if (currentTab.value === "account") {
+    data = account;
+  } else {
+    data = phone;
+  }
   formRef.value?.validate((valid) => {
+    // 表单验证通过 => 登录逻辑：
     if (valid) {
       // 1.判断是否需要记住密码
-      if (isKeepPassword) {
-        // 本地缓存
+      if (isKeepPassword.value) {
+        //  记住密码：取本地缓存（也可以给这些缓存加密）
         localCache.setCache("name", account.name);
         localCache.setCache("password", account.password);
       } else {
-        localCache.deleteCache("name");
-        localCache.deleteCache("password");
+        //  用户选择不记密码：清缓存
+        localCache.removeCache("name");
+        localCache.removeCache("password");
       }
 
-      // 2.开始进行登录验证
+      // 2.登录验证。点击登录按钮触发vuex中的loginModule方法：
+      //   调用dispatch，同时传递两个参数：什么操作、传递的值；
+      //    通过解构，拿到：
       store.dispatch("login/accountLoginAction", { ...account });
+      //
+      loginRequest(data).then((res: any) => {
+        console.log("res", res);
+      });
     }
   });
 };
-const currentTab = ref("account");
-
-function login() {
-  // 点击登录按钮触发vuex中的loginModule方法：
-  store.dispatch("login/accountLoginAction", { ...account });
-  loginRequest(account).then((res: any) => {
-    console.log("res", res);
-  });
-}
 </script>
 
 <style scoped lang="less">

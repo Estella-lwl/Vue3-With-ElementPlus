@@ -1,5 +1,5 @@
 import { request } from "../index";
-import { IAccount } from "./types";
+import { IAccount, IDataType, ILoginResult } from "@/api/login/types";
 
 //在之后url可能会有更改，所以可以使用枚举：
 enum LoginApi {
@@ -14,7 +14,8 @@ interface DataType {
 }
 
 export function loginRequest(account: IAccount) {
-  return request.request<DataType>({
+  // 请求是IDataType类型，同时它里面是ILoginResult的类型：
+  return request.request<IDataType<ILoginResult>>({
     url: LoginApi.AccountLogin,
     method: "get",
     data: account, //data是放在account中的

@@ -24,7 +24,7 @@ const store = createStore<IRootStore>({
 });
 
 export function useStore(): Store<IStoreType> {
-  // 将vuex的useStore起别名后再return出去，而在这这个过程中已经给它明确制定了类型：
+  // 将vuex的useStore起别名后再return出去，而在这个过程中已经给它明确制定了类型：
   return useVuexStore();
 }
 
