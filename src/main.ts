@@ -8,8 +8,11 @@ import ElementPlus from "element-plus"; // 暂时全局引入
 import "element-plus/theme-chalk/index.css";
 import "normalize.css";
 import "./assets/css/index.less";
+import { setupStore } from "@/store";
 
 createApp(App).use(store).use(router).use(ElementPlus).mount("#app");
+
+setupStore();
 
 if (process.env.NODE_ENV === "production") {
   const { mockXHR } = require("../mock");

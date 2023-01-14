@@ -28,4 +28,10 @@ export function useStore(): Store<IStoreType> {
   return useVuexStore();
 }
 
+// vuex在刷新后数据会消失，所以数据持久化：
+export function setupStore() {
+  //调用login中的action：
+  store.dispatch("login/loginLastAction");
+}
+
 export default store;

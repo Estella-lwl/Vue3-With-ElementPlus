@@ -1,8 +1,10 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 import { AxiosRequestInterceptors, SelfRequestConfig } from "./types";
-import { ElLoading } from "element-plus";
+import { ElLoading, ElMessage } from "element-plus";
 import { LoadingInstance } from "element-plus/lib/components/loading/src/loading";
 
+const message = ElMessage;
+const defaultLoading = false;
 // *****该文件后续可能会移至utils文件*****
 
 // 这里使用class因为它有更强的封装性：
@@ -20,7 +22,7 @@ export class SelfAxios {
     /*
         保存一些基本信息👇🏻：
     */
-    this.showLoading = config.showLoading ?? true; //如果??的左边不成立 则执行右边的默认值。
+    this.showLoading = config.showLoading ?? defaultLoading; //如果??的左边不成立 则执行右边的默认值。
     this.interceptors = config.interceptors; //这里也可以不保存起来；保存起来后下行可以使用到👇🏻
     /*
         使用拦截器👇🏻：：
@@ -42,11 +44,13 @@ export class SelfAxios {
     this.instance.interceptors.request.use(
       (config) => {
         console.log("全局请求拦截");
-        this.loading = ElLoading.service({
-          lock: true,
-          text: "Loading",
-          background: "rgba(0, 0, 0, 0.7)"
-        });
+        if (this.showLoading && this.showLoading === true) {
+          this.loading = ElLoading.service({
+            lock: true,
+            text: "Loading",
+            background: "rgba(0, 0, 0, 0.7)"
+          });
+        }
         return config;
       },
       (err) => {
@@ -58,13 +62,10 @@ export class SelfAxios {
       (res) => {
         console.log("全局响应拦截");
         const data = res.data;
-        // this.loading?.close(); //有响应后关闭loading状态
-        setTimeout(() => {
-          this.loading?.close();
-        }, 1000);
+        this.loading?.close(); //有响应后关闭loading状态
         //全局响应失败的拦截： (情况2.以响应成功的形式返回失败)
-        if (data.code === "") {
-          console.log("");
+        if (data.returnCode === "-1001") {
+          message.error("请求失败");
         } else {
           return data;
         }
@@ -108,8 +109,9 @@ export class SelfAxios {
       if (config.interceptors?.requestInterceptor) {
         config = config.interceptors.requestInterceptor(config);
       }
-      // 判断是否需要显示loading：
-      if (config.showLoading === false) {
+
+      // 传入该配置项时显示loading（因为默认值现为false）：
+      if (config.showLoading) {
         this.showLoading = config.showLoading;
       }
       this.instance
@@ -121,14 +123,14 @@ export class SelfAxios {
             // 转换res:
             res = config.interceptors.responseInterceptor(res);
           }
-          // 将showLoading设置为true，避免影响下一个请求：
-          this.showLoading = true;
+          // 将showLoading设为默认值，避免影响下一个请求：
+          this.showLoading = defaultLoading;
           console.log("res", res);
           resolve(res);
         })
         .catch((err) => {
-          // 将showLoading设置为true，避免影响下一个请求：
-          this.showLoading = true;
+          // 将showLoading设为默认值，避免影响下一个请求：
+          this.showLoading = defaultLoading;
           reject(err);
           return err;
         });

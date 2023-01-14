@@ -2,6 +2,7 @@
 import type { AxiosInstance } from "axios";
 import { SelfAxios } from "../utils/request";
 import { BASE_URL, TIME_OUT } from "./common/config";
+import LocalCache from "@/utils/cache";
 
 export class IRequestClass {
   instance?: AxiosInstance;
@@ -26,6 +27,12 @@ export const request = new SelfAxios({
     requestInterceptor: (config) => {
       //在拦截时需要进行的操作可以在这里添加：
       console.log("请求成功的拦截", config);
+      // 拦截所有请求 & 追加token：
+      const token = LocalCache.getCache("token");
+      if (token) {
+        // axios版本更新后类型做了更改，这里加!否则报错（还有其他解决方式）：
+        config.headers!.Authorization = `Bearer ${token}`;
+      }
       return config;
     },
     requestInterceptorCatch: (err) => {

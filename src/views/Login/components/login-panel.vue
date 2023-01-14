@@ -65,8 +65,8 @@ const store = useStore();
 
 const isKeepPassword = ref(false);
 const account = reactive({
-  name: "polar",
-  password: "123"
+  name: "",
+  password: ""
 });
 
 const phone = reactive({

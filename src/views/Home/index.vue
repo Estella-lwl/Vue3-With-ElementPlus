@@ -1,4 +1,5 @@
 <template>
+  <h2>HOME</h2>
   <div>
     <PageSearch :form-config="formConfig"></PageSearch>
   </div>
