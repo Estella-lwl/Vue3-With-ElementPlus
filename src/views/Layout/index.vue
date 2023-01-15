@@ -6,7 +6,7 @@
       </el-aside>
       <el-container class="page">
         <el-header class="page-header">
-          <nav-header />
+          <Header />
         </el-header>
         <el-main class="page-content">
           <div class="page-info">
@@ -18,15 +18,17 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { defineComponent } from "vue";
 import BaseMenu from "@/components/Menu/index";
+import Header from "@/components/Header/index";
 
-export default defineComponent({
-  components: {
-    BaseMenu
-  }
-});
+// export default defineComponent({
+//   components: {
+//     BaseMenu,
+//     Header
+//   }
+// });
 </script>
 
 <style scoped lang="less">

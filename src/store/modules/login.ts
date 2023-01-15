@@ -61,7 +61,7 @@ const loginModule: Module<ILoginState, IRootStore> = {
       LocalCache.setCache("userMenu", userMenu);
 
       // 4. 跳转至首页：
-      router.push("/main");
+      router.push("/layout");
     },
 
     // 5. vuex数据持久化：
