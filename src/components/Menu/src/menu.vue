@@ -28,7 +28,11 @@
             </template>
             <!-- 二级菜单子目录： -->
             <template v-for="children in item.children" :key="children.id">
-              <el-menu-item class="el-menu-item" :index="String(children.id)">
+              <el-menu-item
+                class="el-menu-item"
+                :index="String(children.id)"
+                @click="handleMenuSwitch(children)"
+              >
                 <el-icon v-if="children.icon" color="#409EFC" :size="20">
                   <component
                     :is="children.icon.split('-').slice(2).join('-')"
@@ -74,10 +78,15 @@ export default defineComponent({
       return store.state.login.userMenu;
     });
 
+    function handleMenuSwitch(item: any) {
+      console.log("item: ", item);
+    }
+
     return {
       store,
       menuStore,
-      status
+      status,
+      handleMenuSwitch
     };
   }
 });

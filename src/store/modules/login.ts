@@ -4,6 +4,7 @@ import { IRootStore } from "../types";
 import { loginRequest, getUserInfo, getUserMenu } from "@/api/login/login";
 import { IAccount } from "@/api/login/types";
 import LocalCache from "@/utils/cache";
+import { mapMenu } from "@/utils/mapMenu";
 import router from "@/router";
 
 // 划分模块后，每个模块中Module都要有两个泛型，分别代表：当前模块和根模块的state类型。
@@ -27,6 +28,13 @@ const loginModule: Module<ILoginState, IRootStore> = {
     },
     saveUserMenu(state, userMenu: any) {
       state.userMenu = userMenu;
+      // 在这里对菜单根据权限生成路由映射后再存起来：
+      console.log("菜单@@@@@@", userMenu);
+      const route = mapMenu(userMenu);
+      console.log("遍历后的结果: ", route);
+
+      // route放进 =》router.main.children中（利用addRoute）：
+      router.addRoute();
     }
   },
   actions: {
