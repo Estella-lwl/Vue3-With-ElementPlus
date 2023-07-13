@@ -30,6 +30,7 @@
       "@/*": ["src/*"],
       "components/*": ["src/components/*"]
     },
+    // "forceConsistentCasingInFileNames" : false, //是否开启ts文件系统大小写敏感
     // 可以指定在项目中可以使用哪里库的类型(Proxy/Window/Document)
     "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
   },

@@ -8,7 +8,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { formConfig } from "./config/search.config";
-import PageSearch from "@/components/PageSearch";
+import PageSearch from "@/components/pageSearch";
 
 export default defineComponent({
   components: { PageSearch },

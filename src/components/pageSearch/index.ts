@@ -1,3 +1,3 @@
-import PageSearch from "./src/page-search.vue";
+import PageSea from "./src/page-q.vue";
 
-export default PageSearch;
+export default PageSea;
