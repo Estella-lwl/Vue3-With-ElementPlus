@@ -6,7 +6,7 @@ module.exports = {
   devServer: {
     proxy: {
       "^/api": {
-        target: "http://152.136.185.210:4000",
+        target: "https://coderwhy.org/dev",
         pathRewrite: {
           "^/api": ""
         },
