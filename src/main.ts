@@ -3,7 +3,7 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
-// import mock from "mockjs";
+import "/mock/login.js";
 import ElementPlus from "element-plus"; // 暂时全局引入
 import "element-plus/dist/index.css";
 import * as ElIcons from "@element-plus/icons-vue";

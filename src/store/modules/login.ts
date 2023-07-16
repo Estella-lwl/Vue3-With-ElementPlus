@@ -29,12 +29,15 @@ const loginModule: Module<ILoginState, IRootStore> = {
     saveUserMenu(state, userMenu: any) {
       state.userMenu = userMenu;
       // 在这里对菜单根据权限生成路由映射后再存起来：
-      console.log("菜单@@@@@@", userMenu);
-      const route = mapMenu(userMenu);
-      console.log("遍历后的结果: ", route);
+      console.log("用户菜单", userMenu);
+      const routes = mapMenu(userMenu);
+      console.log("遍历结果: ", routes);
 
       // route放进 =》router.main.children中（利用addRoute）：
-      router.addRoute();
+      // router.addRoute(); //TODO:暂时注释，改为👇🏻
+      routes.forEach((route) => {
+        router.addRoute("main", route);
+      });
     }
   },
   actions: {
@@ -48,7 +51,7 @@ const loginModule: Module<ILoginState, IRootStore> = {
     /* 使用async的方式： */
     async accountLoginAction({ commit }, payload: IAccount) {
       // 1. 登录逻辑，发送请求：
-      const loginData = await loginRequest(payload);
+      const loginData = await loginRequest(payload); // TODO:暂时使用mock
       const { id, token } = loginData.data;
       console.log("id和token", id, token);
       commit("saveToken: ", token); // 调用commit操作savaToken
@@ -62,7 +65,7 @@ const loginModule: Module<ILoginState, IRootStore> = {
       LocalCache.setCache("userInfo", userInfo);
 
       // 3. 请求用户菜单：
-      const menu = await getUserMenu(userInfo.role.id);
+      const menu = await getUserMenu(userInfo.role.id); // TODO:暂时使用mock
       const userMenu = menu.data;
       console.log("userMenu: ", userMenu);
       commit("saveUserMenu", userMenu);
