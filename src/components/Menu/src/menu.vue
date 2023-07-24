@@ -62,6 +62,7 @@
 import { defineComponent, ref, computed } from "vue";
 // import { useStore } from "vuex";   对vuex类型做处理后，使用下一行👇🏻
 import { useStore } from "@/store";
+import { useRouter } from "vue-router";
 
 export default defineComponent({
   props: {
@@ -73,6 +74,7 @@ export default defineComponent({
 
   setup() {
     const store = useStore(); //这时会发现鼠标悬停时类型提示已经是自定义后的
+    const router = useRouter();
     console.log("菜单store", store, store.state.login);
     const menuStore = computed(() => {
       return store.state.login.userMenu;
@@ -80,6 +82,9 @@ export default defineComponent({
 
     function handleMenuSwitch(item: any) {
       console.log("item: ", item);
+      router.push({
+        path: item.url ?? "/404" // 取不到值跳到404
+      });
     }
 
     return {

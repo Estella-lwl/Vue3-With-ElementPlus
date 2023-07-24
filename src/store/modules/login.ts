@@ -34,9 +34,9 @@ const loginModule: Module<ILoginState, IRootStore> = {
       console.log("遍历结果: ", routes);
 
       // route放进 =》router.main.children中（利用addRoute）：
-      // router.addRoute(); //TODO:暂时注释，改为👇🏻
+      // router.addRoute();
       routes.forEach((route) => {
-        router.addRoute("main", route);
+        router.addRoute("main", route); //添加对应的route对象
       });
     }
   },
@@ -51,7 +51,7 @@ const loginModule: Module<ILoginState, IRootStore> = {
     /* 使用async的方式： */
     async accountLoginAction({ commit }, payload: IAccount) {
       // 1. 登录逻辑，发送请求：
-      const loginData = await loginRequest(payload); // TODO:暂时使用mock
+      const loginData = await loginRequest(payload);
       const { id, token } = loginData.data;
       console.log("id和token", id, token);
       commit("saveToken: ", token); // 调用commit操作savaToken
@@ -65,14 +65,14 @@ const loginModule: Module<ILoginState, IRootStore> = {
       LocalCache.setCache("userInfo", userInfo);
 
       // 3. 请求用户菜单：
-      const menu = await getUserMenu(userInfo.role.id); // TODO:暂时使用mock
+      const menu = await getUserMenu(userInfo.role.id);
       const userMenu = menu.data;
       console.log("userMenu: ", userMenu);
       commit("saveUserMenu", userMenu);
       LocalCache.setCache("userMenu", userMenu);
 
       // 4. 跳转至首页：
-      router.push("/layout");
+      router.push("/main");
     },
 
     // 5. vuex数据持久化：

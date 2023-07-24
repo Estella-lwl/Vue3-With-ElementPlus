@@ -24,7 +24,7 @@ app.use(store).use(router).use(ElementPlus).mount("#app");
 // 每次运行都执行一遍setupStore里的loginLastAction：
 setupStore();
 
-if (process.env.NODE_ENV === "production") {
-  const { mockXHR } = require("../mock");
-  mockXHR();
-}
+// if (process.env.NODE_ENV === "production") {
+//   const { mockXHR } = require("../mock");
+//   mockXHR();
+// }
