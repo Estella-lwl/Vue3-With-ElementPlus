@@ -6,27 +6,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/",
     redirect: "/main"
   },
-  // {
-  //   path: "/home",
-  //   name: "Home",
-  //   component: () => import("@/views/Home/index.vue")
-  // },
-  // {
-  //   path: "/list",
-  //   name: "List",
-  //   component: () => import("@/views/AnyList/index.vue")
-  // },
   {
     path: "/login",
     name: "Login",
     component: () => import("@/views/Login/login.vue")
   },
-  // {
-  //   path: "/layout",
-  //   name: "Layout",
-  //   component: () => import("@/views/Layout/index.vue")
-  //   // children: []
-  // },
   {
     path: "/main",
     name: "Main",
