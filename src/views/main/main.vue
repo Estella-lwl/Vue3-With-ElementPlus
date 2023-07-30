@@ -9,9 +9,7 @@
           <Header @menuChange="handleMenuChange" />
         </el-header>
         <el-main class="page-content">
-          <div class="page-info">
-            <router-view></router-view>
-          </div>
+          <router-view></router-view>
         </el-main>
       </el-container>
     </el-container>

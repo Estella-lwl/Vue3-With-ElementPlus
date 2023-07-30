@@ -80,12 +80,12 @@ export default defineComponent({
       return store.state.login.userMenu;
     });
 
-    function handleMenuSwitch(item: any) {
+    const handleMenuSwitch = (item: any) => {
       console.log("item: ", item);
       router.push({
         path: item.url ?? "/404" // 取不到值跳到404
       });
-    }
+    };
 
     return {
       store,
