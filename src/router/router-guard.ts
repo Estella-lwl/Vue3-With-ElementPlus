@@ -1,5 +1,6 @@
 import { Router } from "vue-router";
 import LocalCache from "@/utils/cache";
+// import { firstMenu } from "@/utils/mapMenus";
 
 export function routerGuard(router: Router) {
   router.beforeEach((to) => {
@@ -11,5 +12,7 @@ export function routerGuard(router: Router) {
         return "/login";
       }
     }
+
+    // 也可以在此处映射二级菜单的路由
   });
 }
