@@ -1,6 +1,6 @@
 export default {
   path: "/main/system/menu",
-  name: "menu",
+  name: "Menu",
   component: () => import("@/views/main/System/menu.vue"),
   children: []
 };
