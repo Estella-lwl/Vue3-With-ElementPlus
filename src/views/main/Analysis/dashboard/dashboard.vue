@@ -4,8 +4,6 @@
   </div>
 </template>
 
-<script setup lang="ts">
-console.log("DASHBOARD"); // TODO:
-</script>
+<script setup lang="ts"></script>
 
 <style lang="less" scoped></style>

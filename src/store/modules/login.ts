@@ -34,9 +34,8 @@ const loginModule: Module<ILoginState, IRootStore> = {
       console.log("遍历结果: ", routes);
 
       // route放进 =》router.main.children中（利用addRoute）：
-      // router.addRoute();
       routes.forEach((route) => {
-        router.addRoute("main", route); //添加对应的route对象
+        router.addRoute("Main", route); // route作为子路由添加到main布局组件中。
       });
     }
   },
