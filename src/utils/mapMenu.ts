@@ -60,11 +60,28 @@ export function routerGenerator(menus: any[]) {
 }
 
 /**
- * 根据路径找到菜单中的索引
+ *
+ * @param userMenu 用户菜单
+ * @param currentPath 当前路径
+ * @returns 各层级路由对象组成的面包屑数组
+ */
+export function mapPathToBreadcrumb(userMenu: any[], currentPath: string) {
+  const breadCrumbs: any = [];
+  mapPathToMenu(userMenu, currentPath, breadCrumbs);
+  return breadCrumbs;
+}
+
+/**
+ * 根据路径找到所在的路由对象
  * @param userMenu 当前用户完整的菜单
  * @param currentPath 当前页面的路径
+ * @returns menu 当前页面的路由对象
  */
-export function mapPathToMenu(userMenu: any[], currentPath: string): any {
+export function mapPathToMenu(
+  userMenu: any[],
+  currentPath: string,
+  breadCrumbs?: any[]
+): any {
   // 从userMenu中查找符合的路径：
   for (const menu of userMenu) {
     if (menu.type === 1) {
@@ -73,10 +90,15 @@ export function mapPathToMenu(userMenu: any[], currentPath: string): any {
       // });
       const resultMenu = mapPathToMenu(menu.children ?? [], currentPath);
       if (resultMenu) {
+        const outerPath = currentPath.split("/").slice(0, 3).join("/");
+        const outerMenu = (menu.url = outerPath ? menu : {});
+        breadCrumbs?.push(outerMenu);
+        breadCrumbs?.push(resultMenu);
         return resultMenu;
       }
+      // TODO: 这里未考虑到 type=1 且没有children的情况
     } else if (menu.type === 2 && menu.url === currentPath) {
-      return menu;
+      return menu; //递归的最后是返回这个menu对象
     }
   }
 }
