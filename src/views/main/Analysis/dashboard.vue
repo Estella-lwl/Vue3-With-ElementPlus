@@ -4,6 +4,12 @@
   </div>
 </template>
 
-<script setup></script>
+<script lang="ts">
+export default {
+  name: "Dashboard"
+};
+</script>
+
+<script setup lang="ts"></script>
 
 <style lang="less" scoped></style>

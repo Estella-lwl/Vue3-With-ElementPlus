@@ -11,7 +11,15 @@
     </el-icon>
 
     <div class="nav-container">
-      <div class="crumb">面包屑</div>
+      <div class="nav-breadcrumb">
+        <el-breadcrumb separator="/">
+          <template v-for="item in breadCrumbs" :key="item.name">
+            <el-breadcrumb-item>
+              {{ item.name }}
+            </el-breadcrumb-item>
+          </template>
+        </el-breadcrumb>
+      </div>
       <div class="user-info">
         <el-dropdown>
           <span class="el-dropdown-link">
@@ -43,6 +51,8 @@
 <script lang="ts">
 import { computed, defineComponent, ref } from "vue";
 import { useStore } from "@/store";
+import { useRoute } from "vue-router";
+import { mapPathToBreadcrumb } from "@/utils/mapMenu";
 
 export default defineComponent({
   emits: ["menuChange"],
@@ -52,16 +62,27 @@ export default defineComponent({
     const isFold = ref(false);
     const store = useStore();
     const username = computed(() => store.state.login.userInfo.name);
+    let breadCrumbs: any = [];
+
+    // 使用计算属性：每次点击更新当前路由信息
+    breadCrumbs = computed(() => {
+      // 注意这里每次点击菜单栏应拿到最新的 useRoute、userMenu 和 currentPath：
+      const route = useRoute();
+      const userMenu = store.state.login.userMenu;
+      const currentPath = route.path;
+      return mapPathToBreadcrumb(userMenu, currentPath);
+    });
 
     const handleMenuFold = () => {
       isFold.value = !isFold.value;
       emit("menuChange", isFold.value);
-      console.log("已发射", isFold.value);
+      console.log("emitted:", isFold.value);
     };
 
     return {
       isFold,
       username,
+      breadCrumbs,
       handleMenuFold
     };
   }

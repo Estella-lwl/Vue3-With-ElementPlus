@@ -17,7 +17,6 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("@/views/main/main.vue")
     // children: [] // 这里应该是根据用户菜单动态决定。（当要跳到首页时先做映射 或 在导航守卫中）
   },
-
   {
     path: "/:pathMatch(.*)*",
     name: "404",
