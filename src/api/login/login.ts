@@ -1,5 +1,6 @@
 import { request } from "../index";
-import { IAccount, IDataType, ILoginResult } from "@/api/login/types";
+import { IAccount, ILoginResult } from "@/api/login/types";
+import { IDataType } from "@/api/types";
 
 //在之后url可能会有更改，所以可以使用枚举：
 enum LoginApi {

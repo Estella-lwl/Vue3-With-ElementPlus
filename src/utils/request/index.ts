@@ -5,7 +5,6 @@ import { LoadingInstance } from "element-plus/lib/components/loading/src/loading
 
 const message = ElMessage;
 const defaultLoading = false;
-// *****该文件后续可能会移至utils文件*****
 
 // 这里使用class因为它有更强的封装性：
 export class SelfAxios {
@@ -95,7 +94,7 @@ export class SelfAxios {
 
   // ******如果要给单个请求做拦截，request的写法：   ***********
   // 有两种方式：  （注意这里的类型换了）
-  request<T>(config: SelfRequestConfig<T>): Promise<T> {
+  request<T = any>(config: SelfRequestConfig<T>): Promise<T> {
     //改用return Promise的方式；注意不再是void类型而是promise👆🏻。
     // 注意：promise拿到结果的类型应该是由请求者决定，所以使用泛型👆🏻。
     return new Promise((resolve, reject) => {

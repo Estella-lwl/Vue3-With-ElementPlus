@@ -34,7 +34,7 @@
           </span>
           <template #dropdown>
             <el-dropdown-menu>
-              <el-dropdown-item>
+              <el-dropdown-item @click="logout">
                 <el-icon><CircleClose /></el-icon>
                 退出登录
               </el-dropdown-item>
@@ -51,8 +51,9 @@
 <script lang="ts">
 import { computed, defineComponent, ref } from "vue";
 import { useStore } from "@/store";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { mapPathToBreadcrumb } from "@/utils/mapMenu";
+import localCache from "@/utils/cache";
 
 export default defineComponent({
   emits: ["menuChange"],
@@ -79,11 +80,19 @@ export default defineComponent({
       console.log("emitted:", isFold.value);
     };
 
+    const router = useRouter();
+
+    const logout = () => {
+      localCache.removeCache("token");
+      router.push("/main");
+    };
+
     return {
       isFold,
       username,
       breadCrumbs,
-      handleMenuFold
+      handleMenuFold,
+      logout
     };
   }
 });

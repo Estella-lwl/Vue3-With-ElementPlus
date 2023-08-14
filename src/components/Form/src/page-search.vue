@@ -30,12 +30,7 @@ export default defineComponent({
   },
 
   setup() {
-    const formData = ref({
-      userName: "",
-      password: "",
-      gender: "",
-      date: []
-    });
+    const formData = ref({});
 
     return {
       formData

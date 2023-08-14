@@ -71,7 +71,7 @@ export default defineComponent({
     },
     // 表单项配置：
     formItems: {
-      // 使用PropType意思是：把array当作PropType类型，它可以接收一个泛型。数组或对象类型时可以使用。
+      // 使用PropType作用：把array当作PropType类型，它可以接收一个泛型。数组或对象类型时可以使用。
       type: Array as PropType<FormType[]>,
       required: true,
       default: () => []
@@ -107,12 +107,12 @@ export default defineComponent({
       ...props.modelValue //将props传过来的数据放入新对象
     });
 
-    // 监听数据的变化：
+    // 监听formData的变化 => emit至父组件
     watch(
       formData,
       (newValue) => {
-        console.log("xxx", newValue);
-        // 将变化后的值发射回父组件，这里才是实现双向绑定的过程：
+        console.log("newValue:", newValue);
+        // 将变化后的值发射回父组件，这里才是实现组件双向绑定的过程：
         emit("update: modelValue", newValue);
       },
       {
