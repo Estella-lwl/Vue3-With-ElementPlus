@@ -29,14 +29,13 @@ const loginModule: Module<ILoginState, IRootStore> = {
     saveUserMenu(state, userMenu: any) {
       state.userMenu = userMenu;
       // 在这里对菜单根据权限生成路由映射后再存起来：
-      console.log("菜单@@@@@@", userMenu);
+      console.log("用户菜单", userMenu);
       const routes = mapMenu(userMenu);
-      console.log("遍历后的结果: ", routes);
+      console.log("遍历结果: ", routes);
 
       // route放进 =》router.main.children中（利用addRoute）：
-      // router.addRoute(); //TODO:暂时注释，改为👇🏻
       routes.forEach((route) => {
-        router.addRoute("main", route);
+        router.addRoute("Main", route); // route作为子路由添加到main布局组件中。
       });
     }
   },
@@ -72,7 +71,7 @@ const loginModule: Module<ILoginState, IRootStore> = {
       LocalCache.setCache("userMenu", userMenu);
 
       // 4. 跳转至首页：
-      router.push("/layout");
+      router.push("/main");
     },
 
     // 5. vuex数据持久化：

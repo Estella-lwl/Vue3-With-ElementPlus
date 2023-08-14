@@ -64,6 +64,7 @@ import { FormType } from "../types";
 
 export default defineComponent({
   props: {
+    // 给组件双向绑定后传的值默认叫 modelValue：
     modelValue: {
       type: Object,
       required: true //要求必传后就确保有值，就不会报警告。
