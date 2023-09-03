@@ -1,6 +1,33 @@
 <template>
   <div class="el-table">
-    <el-table :data="tableData" stripe style="width: 100%">
+    <div class="table-header">
+      <div class="table-header-title">
+        <slot name="header-title">{{ title }}</slot>
+      </div>
+      <div class="table-header-right">
+        <slot name="header-btn"> </slot>
+      </div>
+    </div>
+
+    <el-table
+      :data="tableData"
+      stripe
+      style="width: 100%"
+      @selection-change="handleSelectionChange"
+    >
+      <el-table-column
+        v-if="isShowSelectCol"
+        type="selection"
+        align="center"
+        width="28"
+      ></el-table-column>
+      <el-table-column
+        v-if="isShowIdxCol"
+        type="index"
+        label="序号"
+        align="center"
+        width="70"
+      ></el-table-column>
       <template v-for="propItem in propLists" :key="propItem.prop">
         <el-table-column v-bind="propItem" align="center" show-overflow-tooltip>
           <!-- scope拿到本行的数据 -->
@@ -14,13 +41,34 @@
         </el-table-column>
       </template>
     </el-table>
+
+    <div class="table-footer">
+      <slot name="table-footer">
+        <el-pagination
+          v-model:current-page="currentPage4"
+          v-model:page-size="pageSize4"
+          :page-sizes="[100, 200, 300, 400]"
+          :small="small"
+          :disabled="disabled"
+          :background="background"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="400"
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+        />
+      </slot>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { defineProps } from "vue";
+import { defineProps, defineEmits } from "vue";
 
 const props = defineProps({
+  title: {
+    type: String,
+    require: true
+  },
   tableData: {
     type: Array,
     require: true
@@ -28,8 +76,43 @@ const props = defineProps({
   propLists: {
     type: Array,
     require: true
+  },
+  isShowIdxCol: {
+    type: Boolean,
+    default: true
+  },
+  isShowSelectCol: {
+    type: Boolean,
+    default: false
   }
 });
+
+const emit = defineEmits(["selectionChange"]);
+const handleSelectionChange = (val: any) => {
+  emit("selectionChange", val);
+};
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.el-table {
+  padding: 5px;
+
+  .table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 15px;
+    height: 40px;
+
+    .table-header-title {
+      font-size: 20px;
+      font-weight: 700;
+    }
+  }
+
+  .table-footer {
+    margin-top: 20px;
+    text-align: center;
+  }
+}
+</style>

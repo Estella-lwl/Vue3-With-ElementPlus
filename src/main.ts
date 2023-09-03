@@ -10,6 +10,7 @@ import * as ElIcons from "@element-plus/icons-vue";
 import "normalize.css";
 import "./assets/css/index.less";
 import { setupStore } from "@/store";
+import { globalRegister } from "@/global";
 // 统一导入 element 图标
 
 const app = createApp(App);
@@ -20,6 +21,7 @@ for (const [key, component] of Object.entries(ElIcons)) {
 }
 
 app.use(ElementPlus);
+app.use(globalRegister);
 app.use(store);
 setupStore(); // 每次运行都执行一遍setupStore里的loginLastAction：
 app.use(router); // 路由匹配之前先注册好；本行一定要在setupStore之后。

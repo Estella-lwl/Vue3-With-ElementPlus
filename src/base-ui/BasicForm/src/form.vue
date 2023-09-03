@@ -129,7 +129,7 @@ export default defineComponent({
 
 <style scoped lang="less">
 .form {
-  padding-top: 22px;
+  padding: 20px 12px;
   .form-item {
     padding: 5px 30px;
   }

@@ -2,12 +2,14 @@
   <div class="page-search">
     <BasicForm v-bind="formConfig" v-model="formData">
       <template #header>
-        <H3>检索</H3>
+        <p class="search-title">检索</p>
       </template>
 
       <template #formBtn>
-        <el-button type="primary">重置</el-button>
-        <el-button type="primary">搜索</el-button>
+        <div class="search-btn">
+          <el-button type="primary">重置</el-button>
+          <el-button type="primary">搜索</el-button>
+        </div>
       </template>
     </BasicForm>
   </div>
@@ -41,6 +43,13 @@ export default defineComponent({
 
 <style scoped lang="less">
 .page-search {
-  /*  */
+  .search-title {
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  .search-btn {
+    text-align: center;
+  }
 }
 </style>
