@@ -3,7 +3,7 @@
     <PageSearch :form-config="formConfig"></PageSearch>
     <PageContent
       :content-table-config="contentTableConfig"
-      pageName="/users/list"
+      :pageName="pageName"
     ></PageContent>
   </div>
 </template>
@@ -13,6 +13,8 @@ import { formConfig } from "./config/search.config";
 import { contentTableConfig } from "./config/content.config";
 import PageSearch from "@/components/Form";
 import PageContent from "@/components/Table";
+
+const pageName = "users";
 </script>
 
 <style lang="less"></style>

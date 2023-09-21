@@ -10,6 +10,19 @@ export function getUserList(queryInfo: any) {
 }
 
 /**
+ * 获取权限列表
+ * @param queryInfo
+ * @returns
+ */
+export function getRoleList(queryInfo: any) {
+  return request.request<IDataType>({
+    url: "/users/list",
+    method: "post",
+    data: queryInfo
+  });
+}
+
+/**
  * 获取表格通用接口
  * @param queryInfo
  * @returns

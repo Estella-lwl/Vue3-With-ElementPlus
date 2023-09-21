@@ -65,11 +65,11 @@ const getData = async () => {
     // name: "w",
     // cellphone: 4
   };
-  const res = await getTableData(props.pageName as string, data); //获取表格数据
-  // const res = await getUserList(data);
-  tableData.value = res.data.list;
-  const { list, totalCount } = res.data.list;
-  console.log(" res1:", tableData.value);
+
+  const pageUrl = `/${props.pageName}/list`; //拼接接口地址
+  const res = await getTableData(pageUrl, data); //获取表格数据
+  const { list, totalCount } = res.data;
+  tableData.value = list;
 };
 getData();
 
