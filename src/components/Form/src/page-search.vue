@@ -2,7 +2,7 @@
   <div class="page-search">
     <BasicForm v-bind="formConfig" v-model="formData">
       <template #header>
-        <p class="search-title">检索</p>
+        <p>检索</p>
       </template>
 
       <template #formBtn>
@@ -45,16 +45,3 @@ const handleReset = () => {
   }
 };
 </script>
-
-<style scoped lang="less">
-.page-search {
-  .search-title {
-    font-size: 20px;
-    font-weight: 700;
-  }
-
-  .search-btn {
-    text-align: center;
-  }
-}
-</style>

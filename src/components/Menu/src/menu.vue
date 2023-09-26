@@ -123,17 +123,16 @@ export default defineComponent({
 
   .logo {
     padding: 13px;
-    height: 38px;
+    height: 50px;
     font-size: 20px;
 
     img {
       height: 100%;
-      vertical-align: middle; /* 文字基准线 */
     }
 
     span {
       margin: 0 10px;
-      line-height: 22px;
+      vertical-align: super; /* 文字基准线 */
     }
   }
 

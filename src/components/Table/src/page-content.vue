@@ -1,6 +1,5 @@
 <template>
   <div class="table-content">
-    <hr />
     <BasicTable :tableData="tableData" v-bind="contentTableConfig">
       <!-- header插槽 -->
       <template #header-btn>
@@ -22,7 +21,7 @@
         <span>{{ $filters.timeFormat(scope.row.updateAt) }}</span>
       </template>
       <template #edit>
-        <el-button plain size="small" type="success">
+        <el-button plain size="small" type="primary">
           <el-icon><Edit /></el-icon>
           &nbsp;编辑
         </el-button>
@@ -80,7 +79,7 @@ const selectionChange = (val: any) => {
 
 <style scoped>
 .table-content {
-  margin-top: 50px;
+  margin-top: 40px;
   padding-bottom: 50px;
 }
 </style>

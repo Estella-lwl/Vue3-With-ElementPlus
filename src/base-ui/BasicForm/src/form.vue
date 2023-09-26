@@ -1,6 +1,6 @@
 <template>
-  <div class="form">
-    <div>
+  <div class="form-container">
+    <div class="search-title">
       <slot name="header"></slot>
     </div>
     <el-form :label-width="labelWidth">
@@ -12,6 +12,7 @@
               :label="item.label"
               :rules="item.rules"
               :style="itemStyle"
+              class="form-item"
             >
               <template v-if="item.type === 'input'">
                 <el-input
@@ -50,11 +51,11 @@
             </el-form-item>
           </el-col>
         </template>
+        <div :style="itemStyle" class="form-btn">
+          <slot name="formBtn"> </slot>
+        </div>
       </el-row>
     </el-form>
-    <div>
-      <slot name="formBtn"> </slot>
-    </div>
   </div>
 </template>
 
@@ -86,12 +87,14 @@ const props = defineProps({
   // 宽度：
   labelWidth: {
     type: String,
-    default: "100px"
+    default: "75px"
   },
   // 一般情况下表单项样式应该是一致的，所以单独拎出来传递：
   itemStyle: {
     type: Object,
-    default: () => ({ padding: "10px 40px" })
+    default: () => ({
+      padding: "10px 0px"
+    })
   },
   // 响应式布局，可以由外部决定：
   colLayout: {
@@ -129,10 +132,17 @@ watch(
 </script>
 
 <style scoped lang="less">
-.form {
-  padding: 20px 12px;
-  .form-item {
-    padding: 5px 30px;
+.form-container {
+  padding: 20px;
+
+  .search-title {
+    margin-bottom: 25px;
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  .form-btn {
+    margin-left: 50px;
   }
 }
 </style>

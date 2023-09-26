@@ -2,17 +2,14 @@ import { FormConfig } from "@/base-ui/BasicForm";
 
 // 最后该表单所有配置都在下面：（也就可以直接放到config文件中）
 export const formConfig: FormConfig = {
-  itemStyle: {
-    padding: "20px 60px"
-  },
   colLayout: {
-    xl: 7,
+    xl: 5,
     lg: 8,
     md: 12,
     sm: 24,
     xs: 24
   },
-  labelWidth: "120px",
+  labelWidth: "65px",
   formItems: [
     {
       field: "userName",

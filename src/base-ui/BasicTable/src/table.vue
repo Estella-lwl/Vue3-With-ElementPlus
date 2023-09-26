@@ -1,5 +1,5 @@
 <template>
-  <div class="el-table">
+  <div class="table-container">
     <div class="table-header">
       <div class="table-header-title">
         <slot name="header-title">{{ title }}</slot>
@@ -12,7 +12,7 @@
     <el-table
       :data="tableData"
       stripe
-      style="width: 100%"
+      class="table-main"
       @selection-change="handleSelectionChange"
     >
       <el-table-column
@@ -94,14 +94,19 @@ const handleSelectionChange = (val: any) => {
 </script>
 
 <style lang="less" scoped>
-.el-table {
-  padding: 5px;
+.table-container {
+  padding: 20px;
+  box-shadow: 0px -1px 0px 0px #c6c6cad9;
+
+  .table-main {
+    width: 100%;
+    margin-top: 18px;
+  }
 
   .table-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 15px;
     height: 40px;
 
     .table-header-title {
@@ -111,8 +116,9 @@ const handleSelectionChange = (val: any) => {
   }
 
   .table-footer {
-    margin-top: 20px;
-    text-align: center;
+    margin: 0 auto;
+    margin-top: 40px;
+    width: 780px;
   }
 }
 </style>
