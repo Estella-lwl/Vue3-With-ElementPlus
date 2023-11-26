@@ -1,5 +1,5 @@
 export const contentTableConfig = {
-  propLists: [
+  propList: [
     {
       prop: "id",
       label: "id",
@@ -18,17 +18,20 @@ export const contentTableConfig = {
     {
       prop: "createAt",
       label: "创建时间",
-      minWidth: "200"
+      minWidth: "200",
+      slotName: "createAt"
     },
     {
       prop: "updateAt",
       label: "更新时间",
-      minWidth: "200"
+      minWidth: "200",
+      slotName: "updateAt"
     },
     {
       prop: "edit",
       label: "操作",
-      minWidth: "180"
+      minWidth: "180",
+      slotName: "edit"
     }
   ],
   isShowIdxCol: true,

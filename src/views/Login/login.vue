@@ -153,7 +153,8 @@ const handleLogin = () => {
 
   .login-panel {
     margin-bottom: 150px;
-    width: 20%;
+    width: 28%;
+    min-width: 300px;
 
     /deep/ .el-tabs__item,
     /deep/.is-top {
@@ -161,7 +162,7 @@ const handleLogin = () => {
     }
 
     .panel-content {
-      padding: 25px 25px;
+      padding: 25px 15px;
       border-radius: 8px;
 
       .login-form {

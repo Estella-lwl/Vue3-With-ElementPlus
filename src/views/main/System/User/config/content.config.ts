@@ -1,5 +1,6 @@
 export const contentTableConfig = {
-  propLists: [
+  title: "用户列表",
+  propList: [
     {
       prop: "name",
       label: "用户名",
@@ -18,25 +19,28 @@ export const contentTableConfig = {
     {
       prop: "enable",
       label: "状态",
-      minWidth: "100"
+      minWidth: "100",
+      slotName: "enable"
     },
     {
       prop: "createAt",
       label: "创建时间",
-      minWidth: "230"
+      minWidth: "200",
+      slotName: "createAt"
     },
     {
       prop: "updateAt",
       label: "更新时间",
-      minWidth: "230"
+      minWidth: "200",
+      slotName: "updateAt"
     },
     {
       prop: "edit",
       label: "操作",
-      minWidth: "180"
+      minWidth: "180",
+      slotName: "edit"
     }
   ],
   isShowIdxCol: true,
-  isShowSelectCol: true,
-  title: "用户列表"
+  isShowSelectCol: true
 };

@@ -28,12 +28,12 @@
         align="center"
         width="70"
       ></el-table-column>
-      <template v-for="propItem in propLists" :key="propItem.prop">
+      <template v-for="propItem in propList" :key="propItem.prop">
         <el-table-column v-bind="propItem" align="center" show-overflow-tooltip>
           <!-- scope拿到本行的数据 -->
           <template #default="scope">
             <!-- 通过:row="scope.row"将数据传递给外层 -->
-            <slot :name="propItem.prop" :row="scope.row">
+            <slot :name="propItem.slotName" :row="scope.row">
               <!-- 默认展示： -->
               {{ scope.row[propItem.prop] }}
             </slot>
@@ -45,14 +45,14 @@
     <div class="table-footer">
       <slot name="table-footer">
         <el-pagination
-          v-model:current-page="currentPage4"
-          v-model:page-size="pageSize4"
-          :page-sizes="[100, 200, 300, 400]"
           :small="small"
           :disabled="disabled"
           :background="background"
           layout="total, sizes, prev, pager, next, jumper"
-          :total="400"
+          :page-sizes="[10, 20, 30]"
+          :page-size="page.pageSize"
+          :current-page="page.curPage"
+          :total="dataCount"
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
         />
@@ -62,7 +62,11 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits } from "vue";
+import { ref, defineProps, defineEmits } from "vue";
+
+const small = ref(false);
+const background = ref(false);
+const disabled = ref(false);
 
 const props = defineProps({
   title: {
@@ -73,7 +77,7 @@ const props = defineProps({
     type: Array,
     require: true
   },
-  propLists: {
+  propList: {
     type: Array,
     require: true
   },
@@ -84,12 +88,28 @@ const props = defineProps({
   isShowSelectCol: {
     type: Boolean,
     default: false
+  },
+  dataCount: {
+    type: Number,
+    default: 0
+  },
+  page: {
+    type: Object,
+    default: () => ({ curPage: 0, pageSize: 10 })
   }
 });
 
-const emit = defineEmits(["selectionChange"]);
+const emit = defineEmits(["selectionChange", "update:page"]);
 const handleSelectionChange = (val: any) => {
   emit("selectionChange", val);
+};
+
+const handleCurrentChange = (curPage: number) => {
+  emit("update:page", { ...props.page, curPage });
+};
+
+const handleSizeChange = (pageSize: number) => {
+  emit("update:page", { ...props.page, pageSize });
 };
 </script>
 

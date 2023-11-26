@@ -20,37 +20,38 @@ export const formConfig: FormConfig = {
       placeholder: "请输入用户名"
     },
     {
-      field: "password",
-      label: "密码",
-      type: "password",
-      // width: 90,
+      field: "realName",
+      label: "姓名",
+      type: "input",
       rules: [],
-      placeholder: "请输入密码"
+      placeholder: "请输入姓名"
     },
     {
-      field: "gender",
-      label: "性别",
+      field: "cellphone",
+      label: "手机号",
+      type: "input",
+      placeholder: "请输入手机号"
+    },
+    {
+      field: "enable",
+      label: "用户状态",
       type: "select",
-      // width: 90,
-      rules: [],
-      placeholder: "请选择性别",
+      placeholder: "请选择用户状态",
       options: [
         {
-          title: "q",
-          value: "0"
+          title: "启用",
+          value: 1
         },
         {
-          title: "w",
-          value: "1"
+          title: "禁用",
+          value: 0
         }
       ]
     },
     {
-      field: "date",
-      label: "时间",
+      field: "createAt",
+      label: "创建时间",
       type: "datepicker",
-      // width: 150,
-      rules: [],
       //将以下属性全都使用时可以v-bind
       otherOptions: {
         startPlaceholder: "开始时间",

@@ -1,6 +1,11 @@
 <template>
   <div class="table-content">
-    <BasicTable :tableData="tableData" v-bind="contentTableConfig">
+    <BasicTable
+      :tableData="tableData"
+      :dataCount="totalCount"
+      v-model:page="pageInfo"
+      v-bind="contentTableConfig"
+    >
       <!-- header插槽 -->
       <template #header-btn>
         <el-button type="primary" size="small">新增用户</el-button>
@@ -8,12 +13,7 @@
           <el-icon color="#409EFC"><RefreshRight /></el-icon>
         </el-button>
       </template>
-      <!-- 列插槽 -->
-      <template #enable="scope">
-        <el-tag :type="scope.row.enable ? 'success' : 'danger'">
-          {{ scope.row.enable ? "启用" : "禁用" }}
-        </el-tag>
-      </template>
+      <!-- 列插槽(固定显示的) -->
       <template #createAt="scope">
         <span>{{ $filters.timeFormat(scope.row.createAt) }}</span>
       </template>
@@ -30,15 +30,24 @@
           &nbsp;删除
         </el-button>
       </template>
-      <!-- footer插槽 -->
+      <!-- 动态插槽 -->
+      <template
+        v-for="item in dynamicPropSlots"
+        :key="item.prop"
+        #[item.slotName]="scope"
+      >
+        <template v-if="item.slotName">
+          <slot :name="item.slotName" :row="scope.row"></slot>
+        </template>
+      </template>
     </BasicTable>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, defineProps } from "vue";
+import { ref, watch, defineProps, defineExpose } from "vue";
 import BasicTable from "@/base-ui/BasicTable";
-import { getUserList, getTableData } from "@/api/main/system/user";
+import { getTableData } from "@/api/main/system/user";
 
 const props = defineProps({
   pageName: {
@@ -57,24 +66,43 @@ const props = defineProps({
  */
 
 let tableData = ref();
-const getData = async () => {
+
+const pageInfo = ref({ curPage: 1, pageSize: 10 });
+// 切换页码
+watch(pageInfo, () => getData());
+let list = ref(tableData.value?.list);
+let totalCount = ref(tableData.value?.totalCounts);
+
+const getData = async (queryInfo: any = {}) => {
   const data = {
-    offset: 0,
-    size: 10
-    // name: "w",
-    // cellphone: 4
+    offset: pageInfo.value.curPage * pageInfo.value.pageSize,
+    size: pageInfo.value.pageSize,
+    ...queryInfo
   };
 
   const pageUrl = `/${props.pageName}/list`; //拼接接口地址
   const res = await getTableData(pageUrl, data); //获取表格数据
-  const { list, totalCount } = res.data;
+  list = res.data.list;
+  totalCount = res.data.totalCount;
   tableData.value = list;
 };
 getData();
 
-const selectionChange = (val: any) => {
-  console.log("val", val);
-};
+// 动态的插槽
+const dynamicPropSlots = props.contentTableConfig?.propList.filter(
+  (item: any) => {
+    // if (item.slotName === "status") return false;
+    // if (item.slotName === "enable") return false;
+    if (item.slotName === "createAt") return false; // 默认显示的插槽
+    if (item.slotName === "updateAt") return false; // 默认显示的插槽
+    if (item.slotName === "edit") return false; // 默认显示的插槽
+    return true;
+  }
+);
+
+defineExpose({
+  getData
+});
 </script>
 
 <style scoped>
