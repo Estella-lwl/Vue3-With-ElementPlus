@@ -103,4 +103,25 @@ export function mapPathToMenu(
   }
 }
 
+/**
+ *
+ * @param userMenus 当前用户菜单
+ * @returns 当前用户按钮权限
+ */
+export function mapButtonPermission(userMenus: any[]) {
+  const permissions: string[] = [];
+  // 递归查找出三级菜单
+  const _recursePermission = (menus: any[]) => {
+    for (const menu of menus) {
+      if (menu.type === 1 || menu.type === 2) {
+        _recursePermission(menu.children ?? []); //当为空数组时那一层就执行完了
+      } else if (menu.type === 3) {
+        permissions.push(menu.permission);
+      }
+    }
+  };
+  _recursePermission(userMenus);
+  return permissions;
+}
+
 export { firstMenu };

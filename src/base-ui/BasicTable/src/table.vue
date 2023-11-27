@@ -14,6 +14,7 @@
       stripe
       class="table-main"
       @selection-change="handleSelectionChange"
+      v-bind="childrenProps"
     >
       <el-table-column
         v-if="isShowSelectCol"
@@ -42,7 +43,7 @@
       </template>
     </el-table>
 
-    <div class="table-footer">
+    <div class="table-footer" v-if="isShowFooter">
       <slot name="table-footer">
         <el-pagination
           :small="small"
@@ -96,6 +97,14 @@ const props = defineProps({
   page: {
     type: Object,
     default: () => ({ curPage: 0, pageSize: 10 })
+  },
+  isShowFooter: {
+    type: Boolean,
+    default: true
+  },
+  childrenProps: {
+    type: Object,
+    default: () => ({})
   }
 });
 

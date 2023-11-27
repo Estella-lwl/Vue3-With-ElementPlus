@@ -4,7 +4,7 @@ import { IRootStore } from "../types";
 import { loginRequest, getUserInfo, getUserMenu } from "@/api/login/login";
 import { IAccount } from "@/api/login/types";
 import LocalCache from "@/utils/cache";
-import { mapMenu } from "@/utils/mapMenu";
+import { mapMenu, mapButtonPermission } from "@/utils/mapMenu";
 import router from "@/router";
 
 // 划分模块后，每个模块中Module都要有两个泛型，分别代表：当前模块和根模块的state类型。
@@ -14,7 +14,8 @@ const loginModule: Module<ILoginState, IRootStore> = {
     return {
       token: "",
       userInfo: {},
-      userMenu: {}
+      userMenu: {},
+      permission: []
     };
   },
   getters: {},
@@ -29,14 +30,16 @@ const loginModule: Module<ILoginState, IRootStore> = {
     saveUserMenu(state, userMenu: any) {
       state.userMenu = userMenu;
       // 在这里对菜单根据权限生成路由映射后再存起来：
-      console.log("用户菜单", userMenu);
       const routes = mapMenu(userMenu);
-      console.log("遍历结果: ", routes);
 
       // route放进 =》router.main.children中（利用addRoute）：
       routes.forEach((route) => {
         router.addRoute("Main", route); // route作为子路由添加到main布局组件中。
       });
+
+      // 获取用户的按钮权限
+      const permission = mapButtonPermission(userMenu);
+      state.permission = permission;
     }
   },
   actions: {
@@ -52,21 +55,18 @@ const loginModule: Module<ILoginState, IRootStore> = {
       // 1. 登录逻辑，发送请求：
       const loginData = await loginRequest(payload);
       const { id, token } = loginData.data;
-      console.log("id和token", id, token);
       commit("saveToken: ", token); // 调用commit操作savaToken
       LocalCache.setCache("token", token); // 将拿到的token存入localStorage
 
       // 2. 请求用户信息：
       const users = await getUserInfo(id);
       const userInfo = users.data;
-      console.log("userInfo: ", userInfo);
       commit("saveUserInfo", userInfo.data); //操作mutation
       LocalCache.setCache("userInfo", userInfo);
 
       // 3. 请求用户菜单：
       const menu = await getUserMenu(userInfo.role.id);
       const userMenu = menu.data;
-      console.log("userMenu: ", userMenu);
       commit("saveUserMenu", userMenu);
       LocalCache.setCache("userMenu", userMenu);
 

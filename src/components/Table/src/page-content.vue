@@ -8,7 +8,9 @@
     >
       <!-- header插槽 -->
       <template #header-btn>
-        <el-button type="primary" size="small">新增用户</el-button>
+        <el-button v-if="isCreate" type="primary" size="small"
+          >新增用户</el-button
+        >
         <el-button plain size="small">
           <el-icon color="#409EFC"><RefreshRight /></el-icon>
         </el-button>
@@ -21,11 +23,11 @@
         <span>{{ $filters.timeFormat(scope.row.updateAt) }}</span>
       </template>
       <template #edit>
-        <el-button plain size="small" type="primary">
+        <el-button v-if="isUpdate" plain size="small" type="primary">
           <el-icon><Edit /></el-icon>
           &nbsp;编辑
         </el-button>
-        <el-button plain size="small" type="danger">
+        <el-button v-if="isDelete" plain size="small" type="danger">
           <el-icon><Delete /></el-icon>
           &nbsp;删除
         </el-button>
@@ -48,6 +50,7 @@
 import { ref, watch, defineProps, defineExpose } from "vue";
 import BasicTable from "@/base-ui/BasicTable";
 import { getTableData } from "@/api/main/system/user";
+import { usePermission } from "@/hooks/usePermission";
 
 const props = defineProps({
   pageName: {
@@ -60,6 +63,11 @@ const props = defineProps({
     require: true
   }
 });
+
+// 获取用户的按钮操作权限
+const isCreate = usePermission(props.pageName, "create");
+const isDelete = usePermission(props.pageName, "delete");
+const isUpdate = usePermission(props.pageName, "update");
 
 /**
  * - 本层封装会统一处理table数据。
