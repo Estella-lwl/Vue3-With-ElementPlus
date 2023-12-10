@@ -7,10 +7,9 @@ export interface FormType {
   width?: number;
   rules?: any[];
   placeholder?: any;
-  // 针对select：
-  options?: any[];
-  // 针对datePicker等特殊属性：
-  otherOptions?: any;
+  options?: any[]; // el-select
+  otherOptions?: any; // datePicker等特殊属性
+  isHiddenItem?: boolean; //表单项显隐
 }
 
 // 将以上属性合并到一起：所以在之后新建表单使用时可以直接使用下面的。

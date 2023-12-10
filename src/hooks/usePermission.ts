@@ -10,6 +10,6 @@ export function usePermission(pageName: string, action: string) {
   const store = useStore();
   const permissions = store.state.login.permission;
 
-  const verifyPermission = `system:${pageName}:${action}`;
+  const verifyPermission = `system:${pageName}:${action}`; //和接口返回格式一致
   return !!permissions.find((item) => item === verifyPermission);
 }

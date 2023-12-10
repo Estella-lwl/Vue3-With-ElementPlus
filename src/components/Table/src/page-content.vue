@@ -8,7 +8,11 @@
     >
       <!-- header插槽 -->
       <template #header-btn>
-        <el-button v-if="isCreate" type="primary" size="small"
+        <el-button
+          v-if="isCreate"
+          type="primary"
+          size="small"
+          @click="handleAdd"
           >新增用户</el-button
         >
         <el-button plain size="small">
@@ -22,12 +26,24 @@
       <template #updateAt="scope">
         <span>{{ $filters.timeFormat(scope.row.updateAt) }}</span>
       </template>
-      <template #edit>
-        <el-button v-if="isUpdate" plain size="small" type="primary">
+      <template #edit="scope">
+        <el-button
+          v-if="isUpdate"
+          plain
+          size="small"
+          type="primary"
+          @click="handleEdit(scope.row)"
+        >
           <el-icon><Edit /></el-icon>
           &nbsp;编辑
         </el-button>
-        <el-button v-if="isDelete" plain size="small" type="danger">
+        <el-button
+          v-if="isDelete"
+          plain
+          size="small"
+          type="danger"
+          @click="handleDelete(scope.row)"
+        >
           <el-icon><Delete /></el-icon>
           &nbsp;删除
         </el-button>
@@ -47,11 +63,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, defineProps, defineExpose } from "vue";
+import { ref, watch, defineProps, defineEmits, defineExpose } from "vue";
 import BasicTable from "@/base-ui/BasicTable";
-import { getTableData } from "@/api/main/system/user";
 import { usePermission } from "@/hooks/usePermission";
+import { getTableData } from "@/api/main/system/user";
+import { deleteTableData } from "@/api/main/system/user";
 
+const emit = defineEmits(["addAction", "editAction"]);
 const props = defineProps({
   pageName: {
     type: String,
@@ -83,7 +101,7 @@ let totalCount = ref(tableData.value?.totalCounts);
 
 const getData = async (queryInfo: any = {}) => {
   const data = {
-    offset: pageInfo.value.curPage * pageInfo.value.pageSize,
+    offset: (pageInfo.value.curPage - 1) * pageInfo.value.pageSize, // 第一页偏移为0
     size: pageInfo.value.pageSize,
     ...queryInfo
   };
@@ -107,6 +125,21 @@ const dynamicPropSlots = props.contentTableConfig?.propList.filter(
     return true;
   }
 );
+
+const handleAdd = () => {
+  emit("addAction");
+};
+
+const handleEdit = (val: any) => {
+  emit("editAction", val);
+};
+
+const handleDelete = async (payload: any = {}) => {
+  const { id } = payload;
+  const url = `/${props.pageName}/${id}`; //拼接请求路径
+  await deleteTableData(url);
+  getData({ offset: 0, size: 10 }); //删除一条数据后重新请求
+};
 
 defineExpose({
   getData

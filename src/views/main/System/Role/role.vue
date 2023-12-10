@@ -1,5 +1,5 @@
 <template>
-  <div class="user">
+  <div class="role">
     <PageSearch
       :form-config="formConfig"
       @searchEvent="handleSearch"

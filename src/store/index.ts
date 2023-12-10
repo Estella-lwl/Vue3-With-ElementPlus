@@ -2,7 +2,6 @@
 import { createStore, Store, useStore as useVuexStore } from "vuex"; // 其中Store是vuex提供的一个类型
 import { IRootStore, IStoreType } from "./types";
 import login from "./modules/login";
-import main from "./modules/main";
 
 // 使createStore接收一个泛型：
 const store = createStore<IRootStore>({
@@ -18,8 +17,7 @@ const store = createStore<IRootStore>({
   actions: {},
   // 将所有子模块统一在这里注册：
   modules: {
-    login,
-    main
+    login
   }
 });
 

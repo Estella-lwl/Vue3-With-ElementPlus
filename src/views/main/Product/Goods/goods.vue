@@ -1,5 +1,5 @@
 <template>
-  <div class="user">
+  <div class="goods">
     <PageContent
       ref="pageContentRef"
       :content-table-config="contentTableConfig"
@@ -25,8 +25,6 @@
 <script setup lang="ts">
 import PageContent from "@/components/Table";
 import { contentTableConfig } from "./config/content.config";
-
-const pageName = "goods";
 </script>
 
 <style lang="less"></style>
