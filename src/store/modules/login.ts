@@ -14,7 +14,7 @@ const loginModule: Module<ILoginState, IRootStore> = {
     return {
       token: "",
       userInfo: {},
-      userMenu: {},
+      userMenu: [],
       permission: []
     };
   },
@@ -61,7 +61,7 @@ const loginModule: Module<ILoginState, IRootStore> = {
       // 2. 请求用户信息：
       const users = await getUserInfo(id);
       const userInfo = users.data;
-      commit("saveUserInfo", userInfo.data); //操作mutation
+      commit("saveUserInfo", userInfo); //操作mutation
       LocalCache.setCache("userInfo", userInfo);
 
       // 3. 请求用户菜单：
