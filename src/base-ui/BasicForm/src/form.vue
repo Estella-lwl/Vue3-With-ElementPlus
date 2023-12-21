@@ -10,10 +10,10 @@
           <el-col v-bind="colLayout">
             <el-form-item
               v-if="!item.isHiddenItem"
+              class="form-item"
               :label="item.label"
               :rules="item.rules"
               :style="itemStyle"
-              class="form-item"
             >
               <template v-if="item.type === 'input'">
                 <el-input
@@ -23,6 +23,7 @@
               </template>
               <template v-else-if="item.type === 'password'">
                 <el-input
+                  show-password
                   :placeholder="item.placeholder"
                   v-model="formData[`${item.field}`]"
                 ></el-input>
@@ -37,13 +38,12 @@
                     :key="option.value"
                     :value="option.value"
                   >
-                    {{ option.title + "-" + option.value }}
+                    {{ option.title }}
                   </el-option>
                 </el-select>
               </template>
               <template v-else-if="item.type === 'datepicker'">
                 <el-date-picker
-                  :type="item.type"
                   v-bind="item.otherOptions"
                   style="width: 100%"
                   v-model="formData[`${item.field}`]"
@@ -61,14 +61,7 @@
 </template>
 
 <script lang="ts" setup>
-import {
-  ref,
-  watch,
-  defineProps,
-  defineEmits,
-  defineComponent,
-  PropType
-} from "vue";
+import { ref, watch, defineProps, defineEmits, PropType } from "vue";
 import { FormType } from "../types";
 
 const emit = defineEmits(["resetForm", "resetClick", "update:modelValue"]);
@@ -76,13 +69,12 @@ const props = defineProps({
   // 给组件双向绑定后传的值默认叫 modelValue：
   modelValue: {
     type: Object,
-    required: true //要求必传后就确保有值，就不会报警告。
+    required: true
   },
   // 表单项配置：
   formItems: {
     // 使用PropType作用：把array当作PropType类型，它可以接收一个泛型。数组或对象类型时可以使用。
     type: Array as PropType<FormType[]>,
-    required: true,
     default: () => []
   },
   // 宽度：

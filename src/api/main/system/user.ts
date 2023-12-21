@@ -48,3 +48,31 @@ export function deleteTableData(url: string) {
     method: "delete"
   });
 }
+
+/**
+ * 新建用户
+ * @param url 请求路径
+ * @param data 请求参数
+ * @returns
+ */
+export function createUser(url: string, data: any) {
+  return request.request<IDataType>({
+    url: url,
+    method: "post",
+    data: data
+  });
+}
+
+/**
+ * 编辑用户
+ * @param url 请求路径
+ * @param data 请求参数
+ * @returns
+ */
+export function editUser(url: string, data: any) {
+  return request.request<IDataType>({
+    url: url,
+    method: "patch",
+    data: data
+  });
+}

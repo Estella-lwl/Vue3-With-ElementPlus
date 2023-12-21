@@ -50,7 +50,6 @@ const loginModule: Module<ILoginState, IRootStore> = {
     //   const loginRequest = loginRequest();
     // }
 
-    /* 使用async的方式： */
     async accountLoginAction({ commit }, payload: IAccount) {
       // 1. 登录逻辑，发送请求：
       const loginData = await loginRequest(payload);
