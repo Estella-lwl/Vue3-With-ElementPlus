@@ -124,4 +124,27 @@ export function mapButtonPermission(userMenus: any[]) {
   return permissions;
 }
 
+/**
+ * 获取叶子节点：
+ * - 判断是否为叶子节点，实现树结构回显。
+ * - 思路：直到没有叶子节点的时候就结束
+ * @param menuList 全部菜单
+ */
+export function getMenuLeafKeys(menuList: any[]) {
+  const leafKeys: number[] = [];
+
+  const _recurseLeaf = (menuList: any[]) => {
+    for (const menu of menuList) {
+      if (menu.children) {
+        _recurseLeaf(menu.children);
+      } else {
+        leafKeys.push(menu.id);
+      }
+    }
+  };
+  _recurseLeaf(menuList);
+
+  return leafKeys;
+}
+
 export { firstMenu };

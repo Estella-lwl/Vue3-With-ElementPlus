@@ -147,7 +147,7 @@ const handleSizeChange = (pageSize: number) => {
   .table-footer {
     margin: 0 auto;
     margin-top: 40px;
-    width: 780px;
+    /* width: 780px; */
   }
 }
 </style>

@@ -5,6 +5,7 @@ export interface IRootStore {
   age: number;
   allDepartment: any[]; // 部门
   allRole: any[]; // 角色
+  allMenu: any[];
 }
 
 // 定义root中的module的类型：

@@ -8,6 +8,7 @@
       destroy-on-close
     >
       <BasicForm v-bind="dialogConfig" v-model="formData"></BasicForm>
+      <slot></slot>
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="dialogVisible = false">取消</el-button>
@@ -26,6 +27,16 @@ import BasicForm from "@/base-ui/BasicForm";
 import { createUser, editUser, getTableData } from "@/api/main/system/user";
 
 const props = defineProps({
+  dialogTitle: {
+    type: String,
+    required: true
+  },
+
+  pageName: {
+    type: String,
+    required: true
+  },
+
   dialogConfig: {
     type: Object,
     required: true
@@ -36,14 +47,9 @@ const props = defineProps({
     default: () => ({})
   },
 
-  dialogTitle: {
-    type: String,
-    required: true
-  },
-
-  pageName: {
-    type: String,
-    required: true
+  checkedData: {
+    type: Object,
+    default: () => ({})
   }
 });
 
@@ -67,11 +73,15 @@ const handleDialogCommit = () => {
     // 编辑用户
     res.value = editUser(`/${url}/${id}`, {
       ...formData.value,
+      ...props.checkedData,
       id: props.initData.id
     });
   } else {
     // 新建用户
-    res.value = createUser(`/${url}`, { ...formData.value });
+    res.value = createUser(`/${url}`, {
+      ...formData.value,
+      ...props.checkedData
+    });
   }
   if (res.value) {
     dialogVisible.value = false;

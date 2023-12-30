@@ -25,7 +25,7 @@
       :pageName="pageName"
       :dialog-config="dialogConfigAct"
       :init-data="initData"
-    ></PageDialog>
+    />
   </div>
 </template>
 

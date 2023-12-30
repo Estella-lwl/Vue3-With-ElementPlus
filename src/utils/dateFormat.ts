@@ -15,5 +15,5 @@ export function utcDateFormat(
   utcTime: string,
   format: string = DEFAULT_DATE_TIME
 ) {
-  return dayjs.utc(utcTime).format(format);
+  return dayjs.utc(utcTime).utcOffset(8).format(format);
 }

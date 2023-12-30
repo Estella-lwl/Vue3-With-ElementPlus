@@ -1,7 +1,7 @@
 import { ref } from "vue";
 import PageDialog from "@/components/Dialog/src/page-dialog.vue";
 
-type CallbackType = () => void;
+type CallbackType = (item?: object) => void;
 
 export function usePageDialog(
   addCallback?: CallbackType,
@@ -22,7 +22,7 @@ export function usePageDialog(
     if (pageDialogRef.value) {
       initData.value = item;
       pageDialogRef.value.dialogVisible = true;
-      editCallback && editCallback();
+      editCallback && editCallback(item);
     }
   };
 

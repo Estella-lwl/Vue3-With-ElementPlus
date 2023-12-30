@@ -12,7 +12,8 @@ const store = createStore<IRootStore>({
       name: "polariis",
       age: 1,
       allDepartment: [],
-      allRole: []
+      allRole: [],
+      allMenu: []
     };
   },
   getters: {},
@@ -22,21 +23,28 @@ const store = createStore<IRootStore>({
     },
     changeAllRole(state, list) {
       state.allRole = list;
+    },
+    changeAllMenu(state, list) {
+      state.allMenu = list;
     }
   },
   actions: {
     // 1.请求
     async getTableDataAction({ commit }) {
       // ES6解构别名，避免命名冲突。
-      const department = await getTableData("department/list", { size: 100 });
+      const department = await getTableData("/department/list", { size: 100 });
       const { list: departmentData } = department.data;
 
       const role = await getTableData("role/list", { size: 100 });
       const { list: roleData } = role.data;
 
+      const menu = await getTableData("menu/list", {});
+      const { list: menuList } = menu.data;
+
       // 2.保存
       commit("changeAllDepartment", departmentData);
       commit("changeAllRole", roleData);
+      commit("changeAllMenu", menuList);
     }
   },
   // 将所有子模块统一在这里注册：

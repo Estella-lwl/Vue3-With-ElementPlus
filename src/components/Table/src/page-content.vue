@@ -13,7 +13,7 @@
           type="primary"
           size="small"
           @click="handleAdd"
-          >新增用户</el-button
+          >新增</el-button
         >
         <el-button plain size="small">
           <el-icon color="#409EFC"><RefreshRight /></el-icon>
