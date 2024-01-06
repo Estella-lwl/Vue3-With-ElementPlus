@@ -2,6 +2,7 @@
 import { createStore, Store, useStore as useVuexStore } from "vuex"; // 其中Store是vuex提供的一个类型
 import { IRootStore, IStoreType } from "./types";
 import login from "./modules/login";
+import dashboard from "./modules/dashboard";
 import { getTableData } from "@/api/main/system/user";
 
 // 使createStore接收一个泛型：
@@ -49,7 +50,8 @@ const store = createStore<IRootStore>({
   },
   // 将所有子模块统一在这里注册：
   modules: {
-    login
+    login,
+    dashboard
   }
 });
 

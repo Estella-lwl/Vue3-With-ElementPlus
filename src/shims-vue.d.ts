@@ -13,4 +13,4 @@ declare module "*.vue" {
 }
 
 declare let $store: any;
-declare module "*.json";
+declare module "*.json"; /* 识别json文件 */
