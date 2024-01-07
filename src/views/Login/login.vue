@@ -1,22 +1,27 @@
 <template>
   <div class="login">
     <div class="login-panel">
-      <h1>登录</h1>
-      <el-tabs type="border-card" stretch v-model="currentTab">
+      <p class="title">登录</p>
+      <el-tabs
+        type="border-card"
+        stretch
+        v-model="currentTab"
+        class="panel-content"
+      >
         <el-tab-pane name="account">
           <template #label>
-            <span>
+            <span class="custom-tabs-label">
               <i class="el-icon-user-solid"></i>
               账号登录
             </span>
           </template>
           <el-form
-            label-width="60px"
             ref="formRef"
             :model="account"
             :rules="rules"
+            class="login-form"
           >
-            <el-form-item label="账号" prop="name">
+            <el-form-item label="账号" prop="name" class="login-form-item">
               <el-input v-model="account.name" />
             </el-form-item>
             <el-form-item label="密码" prop="password">
@@ -32,21 +37,25 @@
 
         <el-tab-pane name="phone">
           <template #label>
-            <span><i class="el-icon-mobile-phone"></i> 手机登录</span>
+            <span class="custom-tabs-label">
+              <i class="el-icon-mobile-phone"></i>
+              手机登录
+            </span>
           </template>
           <el-form
             label-width="60px"
             ref="formRef"
             :model="phone"
             :rules="rules"
+            class="login-form"
           >
-            <el-form-item label="手机号" prop="num">
-              <el-input v-model="phone.code" />
+            <el-form-item label="手机号" prop="num" class="login-form-item">
+              <el-input v-model="phone.num" />
             </el-form-item>
             <el-form-item label="验证码" prop="code">
               <div class="get-code">
-                <el-input v-model="phone.code" />
-                <el-button type="primary" class="code-btn"
+                <el-input :value="phone.code" />
+                <el-button type="primary" class="code-btn" disabled
                   >获取验证码</el-button
                 >
               </div>
@@ -56,23 +65,25 @@
       </el-tabs>
 
       <div class="account-control">
-        <el-checkbox v-model="isKeepPassword">记住密码</el-checkbox>
+        <el-checkbox v-model="isKeepPassword" class="keep-psw">
+          记住密码
+        </el-checkbox>
         <el-link type="primary">忘记密码</el-link>
       </div>
 
-      <el-button type="primary" class="login-btn" @click="handleLogin"
-        >立即登录</el-button
-      >
+      <div class="login-btn">
+        <el-button class="login-btn-inner" type="primary" @click="handleLogin">
+          立即登录
+        </el-button>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-// import loginPanel from "./components/login-panel.vue";
-import { useStore } from "vuex";
 import { ref, reactive } from "vue";
+import { useStore } from "vuex";
 import { ElForm } from "element-plus";
-import { loginRequest } from "@/api/login/login";
 import localCache from "@/utils/cache";
 import { rules } from "./config/account-config";
 
@@ -118,12 +129,7 @@ const handleLogin = () => {
 
       // 2.登录验证。点击登录按钮触发vuex中的loginModule方法：
       //   调用dispatch，同时传递两个参数：什么操作、传递的值；
-      //    通过解构，拿到：
       store.dispatch("login/accountLoginAction", { ...account });
-      //
-      loginRequest(data).then((res: any) => {
-        console.log("res", res);
-      });
     }
   });
 };
@@ -136,16 +142,50 @@ const handleLogin = () => {
   align-items: center;
   width: 100%;
   height: 100%;
-  background-color: #96ccf1;
+  background-color: #1f334bed;
 
   .login-panel {
     margin-bottom: 150px;
-    width: 320px;
+    width: 28%;
+    min-width: 300px;
+
+    /deep/ .el-tabs__item,
+    /deep/.is-top {
+      border: none;
+    }
+
+    .panel-content {
+      padding: 25px 15px;
+      border-radius: 8px;
+
+      .login-form {
+        margin-top: 20px;
+
+        .login-form-item {
+          margin-bottom: 30px;
+        }
+      }
+
+      .get-code {
+        display: flex;
+
+        .code-btn {
+          margin-left: 8px;
+          width: 85px;
+        }
+      }
+    }
 
     .title {
       text-align: center;
+      margin-bottom: 40px;
+      font-size: 28px;
+      color: #f0f0f0;
     }
 
+    .keep-psw {
+      color: #f0f0f0;
+    }
     .account-control {
       margin-top: 10px;
       display: flex;
@@ -153,8 +193,12 @@ const handleLogin = () => {
     }
 
     .login-btn {
-      width: 100%;
-      margin-top: 10px;
+      margin-top: 23px;
+      text-align: center;
+
+      .login-btn-inner {
+        width: 80%;
+      }
     }
   }
 }

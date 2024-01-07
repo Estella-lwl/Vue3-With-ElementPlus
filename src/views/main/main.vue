@@ -33,7 +33,6 @@ export default defineComponent({
     const isCollapse = ref(false);
     const handleMenuChange = (isFold: boolean) => {
       isCollapse.value = isFold;
-      console.log("接收到点击状态", isCollapse.value);
     };
 
     return {
@@ -95,7 +94,6 @@ export default defineComponent({
 }
 .el-main {
   color: #333;
-  text-align: center;
   background-color: #f0f2f5;
 }
 </style>

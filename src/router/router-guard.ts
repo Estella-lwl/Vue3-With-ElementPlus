@@ -1,5 +1,6 @@
 import { Router } from "vue-router";
 import LocalCache from "@/utils/cache";
+import { firstMenu } from "@/utils/mapMenu";
 
 export function routerGuard(router: Router) {
   router.beforeEach((to) => {
@@ -10,6 +11,11 @@ export function routerGuard(router: Router) {
       if (!token) {
         return "/login";
       }
+    }
+
+    // 默认跳到当前菜单的第一项
+    if (to.path === "/main") {
+      return firstMenu.url;
     }
   });
 }

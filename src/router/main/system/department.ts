@@ -1,6 +1,6 @@
 export default {
   path: "/main/system/department",
-  name: "department",
-  component: import("@/views/main/System/department.vue"),
+  name: "Department",
+  component: () => import("@/views/main/System/department.vue"),
   children: []
 };

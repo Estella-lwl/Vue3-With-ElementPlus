@@ -1,7 +1,8 @@
 import { request } from "../index";
-import { IAccount, IDataType, ILoginResult } from "@/api/login/types";
+import { IAccount, ILoginResult } from "@/api/login/types";
+import { IDataType } from "@/api/types";
 
-//在之后url可能会有更改，所以可以使用枚举：
+//在之后url可能会有更改，所以采用枚举：
 enum LoginApi {
   AccountLogin = "/login",
   UserInfo = "/users/",
@@ -25,11 +26,9 @@ export function loginRequest(account: IAccount) {
     // 给当前请求单独设置拦截：
     interceptors: {
       requestInterceptor: (config) => {
-        console.log("单独请求的config", config);
         return config;
       },
       responseInterceptor: (res) => {
-        console.log("单独响应的res", res);
         return res;
       }
     },

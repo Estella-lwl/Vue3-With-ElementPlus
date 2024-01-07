@@ -2,7 +2,8 @@
 import { createStore, Store, useStore as useVuexStore } from "vuex"; // 其中Store是vuex提供的一个类型
 import { IRootStore, IStoreType } from "./types";
 import login from "./modules/login";
-import main from "./modules/main";
+import dashboard from "./modules/dashboard";
+import { getTableData } from "@/api/main/system/user";
 
 // 使createStore接收一个泛型：
 const store = createStore<IRootStore>({
@@ -10,16 +11,47 @@ const store = createStore<IRootStore>({
     // 最终要返回个对象：
     return {
       name: "polariis",
-      age: 1
+      age: 1,
+      allDepartment: [],
+      allRole: [],
+      allMenu: []
     };
   },
   getters: {},
-  mutations: {},
-  actions: {},
+  mutations: {
+    changeAllDepartment(state, list) {
+      state.allDepartment = list;
+    },
+    changeAllRole(state, list) {
+      state.allRole = list;
+    },
+    changeAllMenu(state, list) {
+      state.allMenu = list;
+    }
+  },
+  actions: {
+    // 1.请求
+    async getTableDataAction({ commit }) {
+      // ES6解构别名，避免命名冲突。
+      const department = await getTableData("/department/list", { size: 100 });
+      const { list: departmentData } = department.data;
+
+      const role = await getTableData("role/list", { size: 100 });
+      const { list: roleData } = role.data;
+
+      const menu = await getTableData("menu/list", {});
+      const { list: menuList } = menu.data;
+
+      // 2.保存
+      commit("changeAllDepartment", departmentData);
+      commit("changeAllRole", roleData);
+      commit("changeAllMenu", menuList);
+    }
+  },
   // 将所有子模块统一在这里注册：
   modules: {
     login,
-    main
+    dashboard
   }
 });
 
@@ -30,8 +62,8 @@ export function useStore(): Store<IStoreType> {
 
 // vuex在刷新后数据会消失，所以数据持久化：
 export function setupStore() {
-  //调用login中的action：
-  store.dispatch("login/loginLastAction");
+  store.dispatch("login/loginLastAction"); //调用login中的action
+  store.dispatch("getTableDataAction");
 }
 
 export default store;

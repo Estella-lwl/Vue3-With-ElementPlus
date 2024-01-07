@@ -10,7 +10,7 @@
       class="el-menu"
       :collapse="collapse"
       unique-opened
-      default-active="2"
+      :default-active="defaultActive"
       text-color="#fff"
       background-color="#001529"
       active-text-color="#409Eff"
@@ -62,6 +62,8 @@
 import { defineComponent, ref, computed } from "vue";
 // import { useStore } from "vuex";   对vuex类型做处理后，使用下一行👇🏻
 import { useStore } from "@/store";
+import { useRouter, useRoute } from "vue-router";
+import { mapPathToMenu } from "@/utils/mapMenu";
 
 export default defineComponent({
   props: {
@@ -73,19 +75,29 @@ export default defineComponent({
 
   setup() {
     const store = useStore(); //这时会发现鼠标悬停时类型提示已经是自定义后的
-    console.log("菜单store", store, store.state.login);
+    const router = useRouter();
+    const route = useRoute();
     const menuStore = computed(() => {
+      //computed拿到的是ref对象
       return store.state.login.userMenu;
     });
 
-    function handleMenuSwitch(item: any) {
-      console.log("item: ", item);
-    }
+    const currentPath = route.path;
+    const menu = mapPathToMenu(menuStore.value, currentPath);
+    const defaultActive = ref(menu.id.toString());
+
+    const handleMenuSwitch = (item: any) => {
+      router.push({
+        path: item.url ?? "/404" // 取不到值跳到404
+      });
+    };
 
     return {
       store,
       menuStore,
       status,
+      defaultActive,
+      currentPath,
       handleMenuSwitch
     };
   }
@@ -111,17 +123,16 @@ export default defineComponent({
 
   .logo {
     padding: 13px;
-    height: 38px;
+    height: 50px;
     font-size: 20px;
 
     img {
       height: 100%;
-      vertical-align: middle; /* 文字基准线 */
     }
 
     span {
       margin: 0 10px;
-      line-height: 22px;
+      vertical-align: super; /* 文字基准线 */
     }
   }
 

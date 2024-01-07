@@ -6,34 +6,17 @@ const routes: Array<RouteRecordRaw> = [
     path: "/",
     redirect: "/main"
   },
-  // {
-  //   path: "/home",
-  //   name: "Home",
-  //   component: () => import("@/views/Home/index.vue")
-  // },
-  // {
-  //   path: "/list",
-  //   name: "List",
-  //   component: () => import("@/views/AnyList/index.vue")
-  // },
   {
     path: "/login",
     name: "Login",
     component: () => import("@/views/Login/login.vue")
   },
-  // {
-  //   path: "/layout",
-  //   name: "Layout",
-  //   component: () => import("@/views/Layout/index.vue")
-  //   // children: [] //👉🏻这里应该是根据用户菜单动态决定，所以：
-  // },
   {
     path: "/main",
     name: "Main",
     component: () => import("@/views/main/main.vue")
-    // children: [] //👉🏻这里应该是根据用户菜单动态决定，所以：
+    // children: [] // 这里应该是根据用户菜单动态决定。（当要跳到首页时先做映射 或 在导航守卫中）
   },
-
   {
     path: "/:pathMatch(.*)*",
     name: "404",
