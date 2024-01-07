@@ -1,4 +1,5 @@
-# test
+## About
+Vue3 + TypeScript + vuex4 + webpack5
 
 ## Project setup
 
@@ -28,6 +29,3 @@ npm run lint
 
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
-###
-
-Vue3 + TypeScript + vuex4 + webpack5
