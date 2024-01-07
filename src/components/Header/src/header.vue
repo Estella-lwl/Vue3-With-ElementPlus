@@ -23,10 +23,10 @@
       <div class="user-info">
         <el-dropdown>
           <span class="el-dropdown-link">
-            <el-avatar
-              size="small"
-              src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"
-            ></el-avatar>
+            <el-avatar size="small">
+              <img src="~@/assets/avator.png" alt="" />
+            </el-avatar>
+
             <span>{{ username }}</span>
             <el-icon class="el-icon--right">
               <arrow-down />
