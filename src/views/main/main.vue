@@ -33,7 +33,6 @@ export default defineComponent({
     const isCollapse = ref(false);
     const handleMenuChange = (isFold: boolean) => {
       isCollapse.value = isFold;
-      console.log("接收到点击状态", isCollapse.value);
     };
 
     return {

@@ -70,7 +70,6 @@ const store = useStore();
 const menuData = computed(() => store.state.allMenu); // 全部菜单
 const menuCheckList = ref();
 const checkChange = (curNodeObj: any, treeCheckedObj: any) => {
-  console.log("checked", treeCheckedObj);
   // 处理&组装所选
   menuCheckList.value = {
     ...treeCheckedObj.checkedKeys,

@@ -133,10 +133,8 @@ const handleLogin = () => {
       //   调用dispatch，同时传递两个参数：什么操作、传递的值；
       //    通过解构，拿到：
       store.dispatch("login/accountLoginAction", { ...account });
-      //
-      loginRequest(data).then((res: any) => {
-        console.log("res", res);
-      });
+
+      loginRequest(data);
     }
   });
 };

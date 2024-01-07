@@ -58,8 +58,6 @@ import localCache from "@/utils/cache";
 export default defineComponent({
   emits: ["menuChange"],
   setup(props, { emit }) {
-    console.log(props, emit);
-
     const isFold = ref(false);
     const store = useStore();
     const username = computed(() => store.state.login.userInfo.name);
@@ -77,7 +75,6 @@ export default defineComponent({
     const handleMenuFold = () => {
       isFold.value = !isFold.value;
       emit("menuChange", isFold.value);
-      console.log("emitted:", isFold.value);
     };
 
     const router = useRouter();

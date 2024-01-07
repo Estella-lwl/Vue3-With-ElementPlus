@@ -104,9 +104,7 @@ const currentTab = ref("account");
 function login() {
   // 点击登录按钮触发vuex中的loginModule方法：
   store.dispatch("login/accountLoginAction", { ...account });
-  loginRequest(account).then((res: any) => {
-    console.log("res", res);
-  });
+  loginRequest(account);
 }
 </script>
 

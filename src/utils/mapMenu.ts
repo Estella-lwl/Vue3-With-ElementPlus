@@ -16,15 +16,12 @@ export function mapMenu(userMenu: any[]): RouteRecordRaw[] {
 
   // webpack 中拿到所有文件：keys()
   routeFiles.keys().forEach((key) => {
-    console.log("当前path", key);
     // S2.根据菜单获取需要添加的routes：
     const route = require("../router/main" + key.split(".")[1]); //得到文件完整路径
     allRoutes.push(route.default); //取出每个模块中的default（url）得到所有路由
   });
 
   routerGenerator(userMenu); //根据以上生成好的所有菜单，添加对应映射到routes数组中
-
-  console.log("routes", routes);
   return routes;
 }
 
@@ -39,23 +36,20 @@ export function routerGenerator(menus: any[]) {
     if (menu.type === 2) {
       // 当处于第2层级，在allRoutes中拿到当前匹配的route：
       const currentRoute = allRoutes.find((route) => {
-        // 当route.path=menu.url就代表找到了当前route：
-        return route.path === menu.url;
+        return route.path === menu.url; // 当route.path=menu.url就代表找到了当前route：
       });
       // 当找到👆🏻时将它放进routes数组：
       if (currentRoute) {
         routes.push(currentRoute);
       }
-
       // 当firstMenu无值 =》赋值为第一个找到的菜单
       if (!firstMenu) {
         firstMenu = menu;
       }
     } else {
-      // 当处于第1层级，递归children：
-      routerGenerator(menu.children);
+      routerGenerator(menu.children); // 当处于第1层级，递归children
     }
-    /* 经过以上递归后，会将所有匹配到的path对应的路由添加到routes中。 */
+    // 经过以上递归，会将所有匹配到的path对应的路由添加到routes中。
   }
 }
 

@@ -5,7 +5,8 @@ export function getUserList(queryInfo: any) {
   return request.request<IDataType>({
     url: "/users/list",
     method: "post",
-    data: queryInfo
+    data: queryInfo,
+    showLoading: true
   });
 }
 
@@ -18,7 +19,8 @@ export function getRoleList(queryInfo: any) {
   return request.request<IDataType>({
     url: "/users/list",
     method: "post",
-    data: queryInfo
+    data: queryInfo,
+    showLoading: true
   });
 }
 
@@ -32,7 +34,8 @@ export function getTableData(url: string, queryInfo: any) {
   return request.request<IDataType>({
     url: url,
     method: "post",
-    data: queryInfo
+    data: queryInfo,
+    showLoading: true
   });
 }
 
@@ -45,7 +48,8 @@ export function getTableData(url: string, queryInfo: any) {
 export function deleteTableData(url: string) {
   return request.request<IDataType>({
     url: url,
-    method: "delete"
+    method: "delete",
+    showLoading: true
   });
 }
 
@@ -59,7 +63,8 @@ export function createUser(url: string, data: any) {
   return request.request<IDataType>({
     url: url,
     method: "post",
-    data: data
+    data: data,
+    showLoading: true
   });
 }
 
@@ -73,6 +78,7 @@ export function editUser(url: string, data: any) {
   return request.request<IDataType>({
     url: url,
     method: "patch",
-    data: data
+    data: data,
+    showLoading: true
   });
 }

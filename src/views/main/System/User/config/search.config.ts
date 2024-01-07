@@ -1,6 +1,5 @@
 import { FormConfig } from "@/base-ui/BasicForm";
 
-// 最后该表单所有配置都在下面：（也就可以直接放到config文件中）
 export const formConfig: FormConfig = {
   colLayout: {
     xl: 5,

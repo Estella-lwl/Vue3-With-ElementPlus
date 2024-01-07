@@ -9,7 +9,8 @@ import { IDataType } from "../../types";
 export function getCateGoodsCount() {
   return request.request<IDataType>({
     url: "/goods/category/count",
-    method: "get"
+    method: "get",
+    showLoading: true
   });
 }
 
@@ -21,7 +22,8 @@ export function getCateGoodsCount() {
 export function getCateGoodsSale() {
   return request.request<IDataType>({
     url: "/goods/category/sale",
-    method: "get"
+    method: "get",
+    showLoading: true
   });
 }
 
@@ -33,7 +35,8 @@ export function getCateGoodsSale() {
 export function getCateGoodsCollection() {
   return request.request<IDataType>({
     url: "/goods/category/favor",
-    method: "get"
+    method: "get",
+    showLoading: true
   });
 }
 
@@ -45,6 +48,7 @@ export function getCateGoodsCollection() {
 export function getGoodsCitySale() {
   return request.request<IDataType>({
     url: "/goods/address/sale",
-    method: "get"
+    method: "get",
+    showLoading: true
   });
 }

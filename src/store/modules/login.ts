@@ -43,9 +43,8 @@ const loginModule: Module<ILoginState, IRootStore> = {
     }
   },
   actions: {
-    // action中的函数接收两个参数：上下文、value。
+    // action中的函数接收两个参数：上下文、value
     // accountLoginAction({ commit }, payload: any) {   旧的方式
-    //   console.log("执行accountLoginAction", payload);
     //   // 1. 登录逻辑，发送请求：
     //   const loginRequest = loginRequest();
     // }
