@@ -31,17 +31,6 @@ const loginModule: Module<ILoginState, IRootStore> = {
     saveUserMenu(state, userMenu: any) {
       state.userMenu = userMenu;
       // 在这里对菜单根据权限生成路由映射后再存起来：
-<<<<<<< HEAD
-      console.log("菜单@@@@@@", userMenu);
-      const routes = mapMenu(userMenu);
-      console.log("遍历后的结果: ", routes);
-
-      // route放进 =》router.main.children中（利用addRoute）：
-      // router.addRoute(); //TODO:暂时注释，改为👇🏻
-      routes.forEach((route) => {
-        router.addRoute("main", route);
-      });
-=======
       const routes = mapMenu(userMenu);
 
       // route放进 =》router.main.children中（利用addRoute）：
@@ -52,7 +41,6 @@ const loginModule: Module<ILoginState, IRootStore> = {
       // 获取用户的按钮权限
       const permission = mapButtonPermission(userMenu);
       state.permission = permission;
->>>>>>> 8c2587a3a853b6adb111249819ae21083ba3a26a
     }
   },
   actions: {
