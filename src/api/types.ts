@@ -21,4 +21,5 @@ export interface IDataType<T = any> {
   code: number;
   // 请求返回的data不是确定的 => 使用泛型：
   data: T;
+  msg: string;
 }

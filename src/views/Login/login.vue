@@ -50,12 +50,12 @@
             class="login-form"
           >
             <el-form-item label="手机号" prop="num" class="login-form-item">
-              <el-input v-model="phone.code" />
+              <el-input v-model="phone.num" />
             </el-form-item>
             <el-form-item label="验证码" prop="code">
               <div class="get-code">
-                <el-input v-model="phone.code" />
-                <el-button type="primary" class="code-btn"
+                <el-input :value="phone.code" />
+                <el-button type="primary" class="code-btn" disabled
                   >获取验证码</el-button
                 >
               </div>
@@ -81,11 +81,9 @@
 </template>
 
 <script setup lang="ts">
-// import loginPanel from "./components/login-panel.vue";
-import { useStore } from "vuex";
 import { ref, reactive } from "vue";
+import { useStore } from "vuex";
 import { ElForm } from "element-plus";
-import { loginRequest } from "@/api/login/login";
 import localCache from "@/utils/cache";
 import { rules } from "./config/account-config";
 
@@ -131,10 +129,7 @@ const handleLogin = () => {
 
       // 2.登录验证。点击登录按钮触发vuex中的loginModule方法：
       //   调用dispatch，同时传递两个参数：什么操作、传递的值；
-      //    通过解构，拿到：
       store.dispatch("login/accountLoginAction", { ...account });
-
-      loginRequest(data);
     }
   });
 };

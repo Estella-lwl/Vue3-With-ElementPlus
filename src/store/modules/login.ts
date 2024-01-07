@@ -1,4 +1,5 @@
-import { Module } from "vuex"; // 为了与TS结合使用，使用vuex4时需要从vuex中引入Modules。
+import { Module } from "vuex"; // 为了与TS结合使用，使用vuex4时需要从vuex中引入Modules
+import { ElMessage } from "element-plus";
 import { ILoginState } from "./types";
 import { IRootStore } from "../types";
 import { loginRequest, getUserInfo, getUserMenu } from "@/api/login/login";
@@ -44,14 +45,20 @@ const loginModule: Module<ILoginState, IRootStore> = {
   },
   actions: {
     // action中的函数接收两个参数：上下文、value
-    // accountLoginAction({ commit }, payload: any) {   旧的方式
-    //   // 1. 登录逻辑，发送请求：
-    //   const loginRequest = loginRequest();
-    // }
-
     async accountLoginAction({ commit }, payload: IAccount) {
       // 1. 登录逻辑，发送请求：
       const loginData = await loginRequest(payload);
+      if (loginData.code === 1) {
+        ElMessage({
+          message: "登陆成功",
+          type: "success"
+        });
+      } else {
+        ElMessage({
+          message: loginData.msg,
+          type: "error"
+        });
+      }
       const { id, token } = loginData.data;
       commit("saveToken: ", token); // 调用commit操作savaToken
       LocalCache.setCache("token", token); // 将拿到的token存入localStorage
